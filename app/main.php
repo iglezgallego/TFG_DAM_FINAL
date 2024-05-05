@@ -475,7 +475,7 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-          <a class="nav-link collapsed" href="main.php?exams=public">
+        <a class="nav-link collapsed" href="main.php?exams=public">
           <i class="bi bi-tv"></i><span>Tablón</span>
         </a>
         <a class="nav-link collapsed" href="main.php?exams=create">
@@ -504,21 +504,9 @@
       </li><!-- End Mis examenes Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-graph-up-arrow"></i><span>Resultados</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="main.php?charts=own">
-              <i class="bi bi-circle"></i><span>Mis resultados</span>
-            </a>
-          </li>
-          <li>
-            <a href="main.php?charts=all">
-              <i class="bi bi-circle"></i><span>Resultados globales</span>
-            </a>
-          </li>
-        </ul>
+         <a class="nav-link collapsed" href="main.php?charts">
+          <i class="bi bi-graph-up-arrow"></i><span>Mis resultados</span>
+        </a> 
       </li><!-- End Forms Nav -->
 
       <li class="nav-heading"><hr></li>
@@ -617,25 +605,11 @@
                         break;
                 }
             }
-            // Cargar las opciones de resultados en la página
+            // Cargar los de resultados en la página
             if (isset($_GET['charts'])) {
                 $charts = $_GET['charts'];
-                // Dependiendo del valor de la opción, incluir diferentes archivos PHP
-                switch ($charts) {
-                    case 'own':
-                        // Incluir el archivo correspondiente para la opción 1
-                        include 'charts/my_charts.php';
-                        break;
-                    case 'all':
-                        // Incluir el archivo correspondiente para la opción 2
-                        include 'charts/all_charts.php';
-                        break;
-                    default:
-                        // Manejar caso en que 'charts' no coincida con ninguna opción conocida
-                        include 'main.php';
-                        break;
-                }
-            } 
+                include 'charts/charts.php';
+            }
         ?>
       </div>
     </section>
