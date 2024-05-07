@@ -9,6 +9,7 @@
               <p></p>
 
               <!-- Table with stripped rows -->
+                    
               <table class="table table table-hover">
                 <thead>
                   <tr>

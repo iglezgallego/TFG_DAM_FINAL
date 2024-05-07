@@ -504,7 +504,7 @@
       </li><!-- End Mis examenes Nav -->
 
       <li class="nav-item">
-         <a class="nav-link collapsed" href="main.php?charts">
+         <a class="nav-link collapsed" href="main.php?charts=table">
           <i class="bi bi-graph-up-arrow"></i><span>Mis resultados</span>
         </a> 
       </li><!-- End Forms Nav -->
@@ -571,34 +571,33 @@
                 // Dependiendo del valor de la opción, incluir diferentes archivos PHP
                 switch ($exams) {
                     case 'own':
-                        // Incluir el archivo correspondiente para la opción 1
                         include 'exams/my_exams.php';
                         break;
+                        
                     case 'shared':
-                        // Incluir el archivo correspondiente para la opción 2
                         include 'exams/shared_exams.php';
                         break;
+                        
                     case 'favorite':
-                        // Incluir el archivo correspondiente para la opción 3
                         include 'exams/favorites_exams.php';
                         break;
+                        
                     case 'public':
-                    // Incluir el archivo correspondiente para la opción 4
                         include 'exams/public_exams.php';
                         break;
+                        
                     case 'create':
-                    // Incluir el archivo correspondiente para la opción 5
                         include 'exams/create/create_exam.php';
                         break;
+                        
                     case 'edit':
-                    // Incluir el archivo correspondiente para la opción 5
                         include 'exams/edit/edit_exam.php';
                         break;
+                        
                     case 'do':
-                    // Incluir el archivo correspondiente para la opción 5
                         include 'exams/do/do_exam.php';
                         break;
-                        case 'do':
+        
                     default:
                         // Manejar caso en que 'exams' no coincida con ninguna opción conocida
                         include 'main.php';
@@ -608,7 +607,19 @@
             // Cargar los de resultados en la página
             if (isset($_GET['charts'])) {
                 $charts = $_GET['charts'];
-                include 'charts/charts.php';
+                // Dependiendo del valor de la opción, incluir diferentes archivos PHP
+                switch ($charts) {
+                    case 'table':
+                        include 'charts/table_charts.php';
+                        break;
+                    case 'result':
+                        include 'charts/result_charts.php';
+                        break;
+                    default:
+                        // Manejar caso en que 'charts' no coincida con ninguna opción conocida
+                        include 'main.php';
+                        break;
+                }
             }
         ?>
       </div>

@@ -31,7 +31,7 @@
         '$gid_user',
         '$total_answers',
         '$correct_answers',
-        '$result',
+        ROUND('$result',2),
         '$time'
         )";
 
