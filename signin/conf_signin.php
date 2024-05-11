@@ -4,7 +4,10 @@
     //Incluyo el archivo con los datos de conexión
     include "../conection/config.php";
     //Realizo la consulta
-    $consulta = "SELECT * FROM users WHERE user_name = '".$_POST['username']."' AND password = '".$_POST['password']."'";
+    $consulta = "SELECT users.*, languages.code_name
+    FROM users
+    INNER JOIN languages ON users.lang_key = languages.lang_key
+    WHERE user_name = '".$_POST['username']."' AND password = '".$_POST['password']."'";
     $resultado = $conection->query($consulta);
     //creo la variable de sesión pasas
     $_SESSION['enter'] = false;
@@ -16,6 +19,7 @@
         $_SESSION['iduser']= $fila['id_user'];
         $_SESSION['rolkey'] = $fila['rol_key'];
         $_SESSION['langkey'] = $fila['lang_key'];
+        $_SESSION['language'] = $fila['code_name'];
         $_SESSION['enter'] = true;
         //Redirijo a la app
         header("Location: ../app/main.php");

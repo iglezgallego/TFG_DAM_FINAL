@@ -1,4 +1,5 @@
 <?php
+//ELIMINAR DESDE LA TABLA "EXAMENES COMPARTIDOS", el examen solo lo borras para tí mismo
     session_start();
     include "../../../conection/config.php";
 
@@ -17,9 +18,13 @@
     // Realizar la consulta SQL para eliminar el registro solo de la tabla shared_exams
     $consulta = "DELETE FROM shared_exams WHERE gid_exam = '$gid_exam' AND gid_user = '".$_SESSION['giduser']."'";
     $resultado = $conection->query($consulta);
+    
+    // Realizar la consulta SQL para eliminar los resultados asociados a ese examen y ese usuario 
+    $consulta2 = "DELETE FROM results WHERE gid_exam = '$gid_exam' AND gid_user = '".$_SESSION['giduser']."'";
+    $resultado2 = $conection->query($consulta2);
 
     // Verificar si se ejecutaron correctamente
-    if ($resultado) {
+    if ($resultado && $resultado2) {
         echo "Los datos fueron eliminados correctamente de ambas tablas.";
         header("Location: ../../main.php?exams=shared");
     } else {

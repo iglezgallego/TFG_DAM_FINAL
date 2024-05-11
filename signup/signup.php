@@ -35,7 +35,7 @@
 
         // Definición de la función translate(), la cual realiza una solicitud AJAX para obtener traducciones
         function translate(language) {
-            var componentNameArray = ["floatingInput", "floatingPassword", "floatingEmail"]; // Array de nombres de componentes
+            var componentNameArray = ["floatingInput", "floatingPassword", "floatingEmail", "headline", "signupbutton", "floatingLanguage"]; // Array de nombres de componentes
 
             // Se devuelve una promesa para manejar el resultado de la solicitud AJAX
             return new Promise(function(resolve, reject) {
@@ -49,8 +49,20 @@
                     },
                     // Función que se ejecuta cuando la solicitud AJAX se completa con éxito
                     success: function(response) {
-                        // Se resuelve la promesa con la respuesta recibida de la solicitud AJAX
-                        resolve(response);
+                        // Parsear la respuesta JSON
+                        var translations = JSON.parse(response);
+
+                        // Actualizar los elementos HTML con las traducciones
+                        $('#floatingInput').next('label').text(translations.floatingInput);
+                        $('#floatingEmail').next('label').text(translations.floatingEmail);
+                        $('#floatingPassword').next('label').text(translations.floatingPassword);
+                        $('#headline').text(translations.headline);
+                        $('#floatingLanguage option[value=""]').text(translations.floatingLanguage);
+                        $('#signupbutton').text(translations.signupbutton);
+                        // Continuar actualizando otros elementos
+
+                        // Resolve la promesa con las traducciones
+                        resolve(translations);
                     },
                     // Función que se ejecuta si la solicitud AJAX falla
                     error: function(xhr, status, error) {
@@ -200,7 +212,7 @@
             <!-- Campo oculto para pasar el langkey -->
             <input type="hidden" id="floatingLangkey" name="lang_key" value="">
             <br>
-            <button class="w-100 btn btn-lg btn-primary" type="submit" style="background:#0d6efd; border:none;">Registrarse</button>
+            <button class="w-100 btn btn-lg btn-primary" id="signupbutton" type="submit" style="background:#0d6efd; border:none;">Registrarse</button>
         </form>
         <!-- Pie de pagina -->
         <p class="mt-5 mb-3 text-muted">&copy; ExamUp</p>

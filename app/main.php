@@ -12,6 +12,10 @@
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
+
+    $consultaTrans = "SELECT * FROM translations";
+    $resultadoTrans = $conection->query($consultaTrans);
+    
 ?>
 
 <!-- HTML -->
@@ -441,7 +445,10 @@
             <li>
               <a class="dropdown-item d-flex align-items-center" href="main.php?profile">
                 <i class="bi bi-person"></i>
-                <span>Mi perfil</span>
+                <span id="menuProfile"><?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'menuProfile') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                    } ?>
+                  </span>
               </a>
             </li>
             <li>
@@ -450,7 +457,9 @@
             <li>
               <a class="dropdown-item d-flex align-items-center" href="logout/logout.php">
                 <i class="bi bi-box-arrow-right"></i>
-                <span>Cerrar sesión</span>
+                <span id="menuLogout"><?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'menuLogout') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                    } ?></span>
               </a>
             </li>
 
@@ -468,36 +477,67 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="main.php">
+        <a class="nav-link collapsed" href="main.php">
           <i class="bi bi-grid"></i>
-          <span>Inicio</span>
+          <span id="sidebarHome">
+              <?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'sidebarHome') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                } ?>
+            </span>
         </a>
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="main.php?exams=public">
-          <i class="bi bi-tv"></i><span>Tablón</span>
+          <i class="bi bi-tv"></i><span id="sidebarBoard"><?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'sidebarBoard') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                    } ?></span>
         </a>
-        <a class="nav-link collapsed" href="main.php?exams=create">
-          <i class="bi bi-plus-square"></i><span>Crear exámen</span>
+        <a class="nav-link collapsed" id="sidebarNew" href="main.php?exams=create">
+          <i class="bi bi-plus-square"></i>
+            <span>
+                <?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'sidebarNew') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                    } ?>
+            </span>
         </a>
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-book"></i><span>Mis exámenes</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link collapsed" id="sidebarMyexams" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-book"></i><span>
+            <?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'sidebarMyexams') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                    } ?>
+            </span>
+            <i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="main.php?exams=own">
-              <i class="bi bi-circle"></i><span>Creados por mi</span>
+            <a id="sidebarForme" href="main.php?exams=own">
+              <i class="bi bi-circle"></i>
+                <span>
+                    <?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'sidebarForme') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                    } ?>
+                </span>
             </a>
           </li>
           <li>
-            <a href="main.php?exams=shared">
-              <i class="bi bi-circle"></i><span>Compartidos</span>
+            <a id="sidebarShared" href="main.php?exams=shared">
+              <i class="bi bi-circle"></i>
+                <span>
+                    <?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'sidebarShared') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                    } ?>
+                </span>
             </a>
           </li>
           <li>
-            <a href="main.php?exams=favorite">
-              <i class="bi bi-circle"></i><span>Favoritos</span>
+            <a id="sidebarFavorites" href="main.php?exams=favorite">
+              <i class="bi bi-circle"></i>
+                <span>
+                    <?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'sidebarFavorites') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                    } ?>
+                </span>
             </a>
           </li>
         </ul>
@@ -505,7 +545,12 @@
 
       <li class="nav-item">
          <a class="nav-link collapsed" href="main.php?charts=table">
-          <i class="bi bi-graph-up-arrow"></i><span>Mis resultados</span>
+          <i class="bi bi-graph-up-arrow"></i>
+             <span id="sidebarMyresults">
+                 <?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'sidebarMyresults') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                    } ?>
+             </span>
         </a> 
       </li><!-- End Forms Nav -->
 
@@ -514,14 +559,22 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="main.php?profile">
           <i class="bi bi-person-square"></i>
-          <span>Perfil</span>
+          <span id="sidebarProfile">
+              <?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'sidebarProfile') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                    } ?>
+            </span>
         </a>
       </li><!-- End Perfil Page Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="logout/logout.php">
           <i class="bi bi-box-arrow-right"></i>
-          <span>Cerrar sesión</span>
+          <span id="sidebarLogout">
+              <?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'sidebarLogout') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                    } ?>
+            </span>
         </a>
       </li><!-- End Cerrar sesión Page Nav -->
     </ul>
@@ -630,20 +683,34 @@
       <div class="modal-dialog modal-lg"> <!-- Agregamos las clases modal-dialog-centered para centrar y modal-lg para hacerla más ancha -->
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Compartir examen</h5>
+            <h5 class="modal-title" id="modalTitle">
+                <?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'modalTitle') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                    } ?>
+              </h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="limpiarInput()"></button>
           </div>
           <div class="modal-body">
-            <label>Introduce el email del usuario con quien quieres compartir el examen</label>
+            <label id="modalLabel">
+                <?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'modalLabel') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                    } ?>
+              </label>
             <br><br>
-            <input type="email" class="form-control" id="shareEmail" placeholder="Email del usuario" name="email" required style="border-radius:5px">
+            <input type="email" class="form-control" id="shareEmail" placeholder="<?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'shareEmail') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                    } ?>" name="email" required style="border-radius:5px">
               <br>
             <p id="message">
                 <!-- Cargar texto enviado por ajax dinámicamente indicando si el examen se ha compartido correctamente o no --> 
             </p>
           </div>
           <div class="modal-footer">
-            <button id="enviarBtn" type="button" class="btn btn-primary" onclick="compartirExamen(this.getAttribute('data-gid-exam'))" data-gid-exam="">Enviar</button>
+            <button id="enviarBtn" type="button" class="btn btn-primary" onclick="compartirExamen(this.getAttribute('data-gid-exam'))" data-gid-exam="">
+                <?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'enviarBtn') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                    } ?>
+              </button>
           </div>
         </div>
       </div>

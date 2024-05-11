@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <!-- Título de la página -->
-    <title>examUp</title>
+    <title>eXamUp</title>
     <!-- Enlaces de bootstrap -->
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/cover/">
     <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -122,8 +122,65 @@
             // Almacenar el valor seleccionado en localStorage
             localStorage.setItem('selectedLanguage', selectedValue);
             //console.log(localStorage.getItem('selectedLanguage'));
+              
+            // Llamo a la función translate pasandole el idioma seleccionado
+            translate(selectedValue);
             });
         })
+        
+        // TRADUCCIONES //
+        
+        // Cuando el documento HTML ha sido completamente cargado y analizado, se ejecuta la función asíncrona
+        $(document).ready(async function() {
+            // Obtener el idioma seleccionado del localStorage
+            var selectedLanguage = localStorage.getItem('selectedLanguage');
+            // Definir el idioma predeterminado
+            const defaultLanguage = "es_ES";
+            // Si hay un idioma seleccionado en el localStorage, úsalo; de lo contrario, utiliza el idioma predeterminado
+            var languageToUse = selectedLanguage ? selectedLanguage : defaultLanguage;
+            // Llamada a la función translate() con el idioma seleccionado
+            var traducciones = await translate(languageToUse);
+            console.log(traducciones);
+            
+        });
+
+        // Definición de la función translate(), la cual realiza una solicitud AJAX para obtener traducciones
+        function translate(language) {
+            var componentNameArray = ["appDescription", "mainAccess"]; // Array de nombres de componentes
+
+            // Se devuelve una promesa para manejar el resultado de la solicitud AJAX
+            return new Promise(function(resolve, reject) {
+                // Se realiza la solicitud AJAX utilizando jQuery.ajax()
+                $.ajax({
+                    url: 'ajaxTranslate.php', // URL del archivo PHP que maneja la traducción
+                    type: 'GET', // Método de solicitud HTTP
+                    data: {
+                        language: language, // Parámetro: idioma
+                        componentNameArray: JSON.stringify(componentNameArray) // Parámetro: array de nombres de componentes convertido a cadena JSON
+                    },
+                    // Función que se ejecuta cuando la solicitud AJAX se completa con éxito
+                    success: function(response) {
+                        // Parsear la respuesta JSON
+                        var translations = JSON.parse(response);
+
+                        // Actualizar los elementos HTML con las traducciones
+                        $('#appDescription').text(translations.appDescription);
+                        $('#mainAccess').text(translations.mainAccess);
+                        // Continuar actualizando otros elementos
+
+                        // Resolve la promesa con las traducciones
+                        resolve(translations);
+                    },
+                    // Función que se ejecuta si la solicitud AJAX falla
+                    error: function(xhr, status, error) {
+                        // Se imprime el error en la consola del navegador
+                        console.error(xhr);
+                        // Se rechaza la promesa con el mensaje de error
+                        reject(error);
+                    }
+                });
+            });
+        }
     </script>
   </head>
     
@@ -136,23 +193,27 @@
       <header class="mb-auto">
         <!-- Selector de idioma -->
         <div class="dropdown dropdown-corner">
-          <select class="form-select" id="floatingLanguage" name="language" required style="border-radius:5px;">
+            <select class="form-select" id="floatingLanguage" name="language" required style="border-radius:5px;">
                 <!-- Opciones de lenguajes -->
                 <?php
+                    
+                    // Obtener el idioma seleccionado que esta siendo enviado por AJAX
+                    $selectedLanguage = isset($_POST['selectedLanguage']) ? $_POST['selectedLanguage'] : '';
+
+                    // Consulta para obtener los idiomas disponibles
                     $consulta = "SELECT * FROM languages";
                     $resultado = $conection->query($consulta);
+
                     // Comprobar si la consulta fue exitosa antes de iterar sobre los resultados
                     if ($resultado) {
                         // Iterar sobre los resultados obtenidos de la consulta
                         while ($fila = $resultado->fetch_assoc()) {
-                            // Imprimir cada opción del dropdown con los datos de la consulta
-                            echo '<option value="' . $fila["code_name"] . '" langkey="' . $fila["lang_key"] . '">';
+                            
+                            echo '<option value="' . $fila["code_name"] . '" langkey="' . $fila["lang_key"] . '" ' . $selected . '>';
                             echo $fila["description"] . '</option>';
                         }
-                    } else {
-                        echo "Error al ejecutar la consulta: " . $conexion->error;
                     }
-                ?> 
+                ?>
             </select>
         </div>
       </header>
@@ -160,16 +221,16 @@
       <main class="px-3">
         <h1 style="font-family:matisan; font-size:80px; -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: rgb(37 114 198); text-stroke-width: 1px; text-stroke-color: rgb(37 114 198);">e<img class="mb-4" src="assets/brand/logotipo2.png" alt="" width="60" height="60">amUp</h1>
-        <p class="lead">Descripción de la app</p>
+        <p class="lead" id="appDescription">Descripción de la app</p>
         <p class="lead">
-          <a href="signin/signin.php" class="btn btn-lg btn-light fw-bold border-white bg-white">Acceder</a>
+          <a href="signin/signin.php" id="mainAccess" class="btn btn-lg btn-light fw-bold border-white bg-white">Acceder</a>
         </p>
         <!--Enlace a js de bootstrap-->
         <script src="bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
       </main>
         <!-- Pie de página -->
       <footer class="mt-auto text-white-50">
-         <p class="mt-5 mb-3 text-muted">&copy; Isabel González-Gallego Rivera 2024</p>
+         <p class="mt-5 mb-3 text-muted" style="color: rgba(255, 255, 255, 0.6) !important;">&copy; Isabel González-Gallego Rivera 2024</p>
       </footer>
     </div>
       
@@ -190,6 +251,13 @@
                 );
                 return $lang;
             };
+            // Obtener el idioma seleccionado del localStorage
+            var selectedLanguage = localStorage.getItem('selectedLanguage');
+            // Verificar si el idioma seleccionado está en el dropdown
+            if (selectedLanguage) {
+                // Seleccionar automáticamente la opción del idioma en el dropdown
+                $('#floatingLanguage').val(selectedLanguage).trigger('change');
+            }
         });
     </script>
   </body>

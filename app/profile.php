@@ -33,7 +33,12 @@
                       <ul class="nav nav-tabs nav-tabs-bordered">
 
                         <li class="nav-item">
-                          <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Detalles</button>
+                          <button class="nav-link active" id="profileDetails" data-bs-toggle="tab" data-bs-target="#profile-overview">
+                              <?php foreach ($resultadoTrans as $traduccion) {
+                                if ($traduccion['component_name'] === 'profileDetails') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                                } 
+                              ?>
+                            </button>
                         </li>
 
                         <li class="nav-item">
@@ -107,7 +112,7 @@
                           <form method="POST" action="update_profile.php">
                               
                             <div class="row mb-3">
-                              <label for="username" class="col-md-4 col-lg-3 col-form-label">Nombre de usuario</label>
+                              <label for="username" class="col-md-4 col-lg-3 col-form-label">Usuario</label>
                               <div class="col-md-8 col-lg-9">
                                 <input name="username" type="text" class="form-control" id="fullName" value=<?php echo ($_SESSION['username']) ?>>
                               </div>

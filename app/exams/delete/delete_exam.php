@@ -1,4 +1,5 @@
 <?php
+//ELIMINAR DESDE LA TABLA "MIS EXAMENES"
     session_start();
     include "../../../conection/config.php";
 
@@ -28,6 +29,12 @@
     // Realizar la consulta SQL para eliminar las preguntas relacionadas con el examen
     $consulta4 = "DELETE FROM questions WHERE gid_exam = '$gid_exam'";
     $resultado4 = $conection->query($consulta4);
+
+    // Realizar consulta SQL para eliminar los resultados relacionados con el examen
+    $consulta5 = "DELETE FROM results WHERE gid_exam = '$gid_exam'";
+    $resultado5 = $conection->query($consulta5);
+
+
 
     // Verificar si se ejecutaron correctamente
     if ($resultado && $resultado2 && $resultado3 && $resultado4) {
