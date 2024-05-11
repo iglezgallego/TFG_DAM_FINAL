@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-05-2024 a las 18:45:58
+-- Tiempo de generación: 05-05-2024 a las 15:43:50
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -68,7 +68,8 @@ CREATE TABLE `favorites` (
 
 INSERT INTO `favorites` (`id_favorite`, `gid_exam`, `gid_user`) VALUES
 (10, 'c72bdecd987ffd06133c0e38cc0a06c03a9f9ef4738666c430dc509abdc91e31', '69736162656c69736162656c40676d61696c2e636f6d'),
-(14, '5383bb304431a82063229de6a1a7f53e746705fc5db313d71e534ef00e388b4e', '69736169736140676d61696c2e636f6d');
+(57, 'c72bdecd987ffd06133c0e38cc0a06c03a9f9ef4738666c430dc509abdc91e31', '69736169736140676d61696c2e636f6d'),
+(60, 'fad92181f006feafa6d34cfccc76eddb45ae1dfdd2d3033f7f0c8a932083d3ff', '69736169736140676d61696c2e636f6d');
 
 -- --------------------------------------------------------
 
@@ -147,6 +148,22 @@ INSERT INTO `question_type` (`id_type`, `type_name`, `component_name`, `type_key
 (1, 'Test', 'option_test', 779442001),
 (2, 'Order', 'option_order', 779442002),
 (3, 'Fill', 'option_fill', 779442003);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `results`
+--
+
+CREATE TABLE `results` (
+  `Identificador` int(255) NOT NULL,
+  `gid_exam` varchar(255) NOT NULL,
+  `gid_user` varchar(255) NOT NULL,
+  `total_answers` int(255) NOT NULL,
+  `correct_answers` int(255) NOT NULL,
+  `result` int(255) NOT NULL,
+  `time` int(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -273,6 +290,12 @@ ALTER TABLE `question_type`
   ADD PRIMARY KEY (`id_type`);
 
 --
+-- Indices de la tabla `results`
+--
+ALTER TABLE `results`
+  ADD PRIMARY KEY (`Identificador`);
+
+--
 -- Indices de la tabla `rols`
 --
 ALTER TABLE `rols`
@@ -310,7 +333,7 @@ ALTER TABLE `exams`
 -- AUTO_INCREMENT de la tabla `favorites`
 --
 ALTER TABLE `favorites`
-  MODIFY `id_favorite` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_favorite` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT de la tabla `languages`
@@ -329,6 +352,12 @@ ALTER TABLE `questions`
 --
 ALTER TABLE `question_type`
   MODIFY `id_type` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `results`
+--
+ALTER TABLE `results`
+  MODIFY `Identificador` int(255) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `rols`
