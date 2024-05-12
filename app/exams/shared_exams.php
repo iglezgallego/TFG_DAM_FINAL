@@ -2,19 +2,33 @@
 <div class="col-lg-12">
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title">Exámenes compartidos</h5>
+      <h5 class="card-title" id="tableShared"><?php foreach ($resultadoTrans as $traduccion) {
+        if ($traduccion['component_name'] === 'tableShared') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+        } ?></h5>
       <p></p>
 
       <!-- Table with stripped rows -->
       <table class="table table-hover">
         <thead>
           <tr>
-            <th>Título</th>
-            <th>Autor</th>
-            <th>Estado</th>
-            <th data-type="date" data-format="DD/MM/YYYY">Fecha compartido</th>
-            <th data-type="date" data-format="DD/MM/YYYY">Fecha creación</th>
-            <th data-type="date" data-format="DD/MM/YYYY">Ultima modificación</th>
+            <th id="tableTitle"><?php foreach ($resultadoTrans as $traduccion) {
+            if ($traduccion['component_name'] === 'tableTitle') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+            } ?></th>
+            <th id="tableAutor"><?php foreach ($resultadoTrans as $traduccion) {
+            if ($traduccion['component_name'] === 'tableAutor') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+            } ?></th>
+            <th id="tableState"><?php foreach ($resultadoTrans as $traduccion) {
+            if ($traduccion['component_name'] === 'tableState') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+            } ?></th>
+            <th id="tableDateCreated" data-type="date" data-format="DD/MM/YYYY"><?php foreach ($resultadoTrans as $traduccion) {
+            if ($traduccion['component_name'] === 'tableDateCreated') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+            } ?></th>
+            <th id="tableDateUpdated" data-type="date" data-format="DD/MM/YYYY"><?php foreach ($resultadoTrans as $traduccion) {
+            if ($traduccion['component_name'] === 'tableDateUpdated') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+            } ?></th>
+            <th id="tableDateShared" data-type="date" data-format="DD/MM/YYYY"><?php foreach ($resultadoTrans as $traduccion) {
+            if ($traduccion['component_name'] === 'tableDateShared') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+            } ?></th>
             <th></th>
             <th></th>
             <th></th>
@@ -36,8 +50,8 @@
                     $author = $fila['autor'];
                     $status = $fila['status'];
                     $created = $fila['date_created'];
-                    $shared = $fila['date_shared'];
                     $updated = $fila['date_updated'];
+                    $shared = $fila['date_shared'];
                     
                     // Reemplazar "0000-00-00" con "-" si la fecha de modificación es "0000-00-00"
                     $updated = ($updated == "0000-00-00") ? "-" : $updated;
@@ -46,9 +60,9 @@
                         <td><a class="nav-link" href="?exams=do&gid_exam='.$fila['gid_exam'].'">'.$title.'</a></td> 
                         <td>'.$author.'</td>
                         <td>'.$status.'</td>
-                        <td>'.$shared.'</td>
                         <td>'.$created.'</td>
                         <td>'.$updated.'</td>
+                        <td>'.$shared.'</td>
                         <td>';
                     
                         $consulta2 = "SELECT * FROM favorites WHERE gid_user = '".$_SESSION['giduser']."' AND gid_exam = '".$fila['gid_exam']."' ";

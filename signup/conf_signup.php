@@ -19,7 +19,7 @@
     $resultado = $conection->query($consulta);
     //Compruebo que no existan dos usuarios y correo iguales en la base de datos
     if($fila=$resultado->fetch_assoc()){
-        header("Location:singup.php?error=si");
+        header("Location:signup.php?error=si");
         //Si coincide, es decir, hay dos iguales creo la varible "error" dentro del enlace
     }else{
         //Si no coincide hago un INSERT en la tabla usuarios

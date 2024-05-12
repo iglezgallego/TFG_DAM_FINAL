@@ -108,6 +108,7 @@
             height: 18px;
             margin-right: 10px;
         }
+
     </style>
     <!-- Link a estilo de cover -->
     <link href="cover.css" rel="stylesheet">
@@ -181,6 +182,7 @@
                 });
             });
         }
+               
     </script>
   </head>
     

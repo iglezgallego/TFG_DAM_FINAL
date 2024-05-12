@@ -38,25 +38,35 @@
                  <!-- Divs dinámicos para mostrar los resultados -->
                 <div id="resultadosContainer">
                     <ul>
-                        <li>
-                            Total de preguntas:
+                        <li id="infoTotalquestion">
+                            <?php foreach ($resultadoTrans as $traduccion) {
+                            if ($traduccion['component_name'] === 'infoTotalquestion') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                            } ?>
                             <span id="totalRespuestas" style="color:#532970;"></span>
                         </li>
-                        <li>
-                            Respuestas correctas:
+                        <li id="infoTotalcorrect">
+                            <?php foreach ($resultadoTrans as $traduccion) {
+                            if ($traduccion['component_name'] === 'infoTotalcorrect') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                            } ?>
                             <span id="respuestasCorrectas" style="color:#532970;"></span>
                         </li>
-                        <li>
-                            Porcentaje de respuestas correctas:
+                        <li id="infoPercentage">
+                            <?php foreach ($resultadoTrans as $traduccion) {
+                            if ($traduccion['component_name'] === 'infoPercentage') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                            } ?>
                             <span id="resultado" style="color:#532970;"></span>
                             <span style="color:#532970; margin:0px;">%</span>
                         </li>
-                        <li>
-                            Tiempo transcurrido:
+                        <li id="infoTime">
+                            <?php foreach ($resultadoTrans as $traduccion) {
+                            if ($traduccion['component_name'] === 'infoTime') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                            } ?>
                             <span id="tiempoTranscurrido" style="color:#532970;"></span>
                         </li>
                     </ul>
-                    <button class="btn btn-primary" onclick="descargarPDF()">Descargar PDF</button>
+                    <button id="buttonPDF" class="btn btn-primary" onclick="descargarPDF()"><?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'buttonPDF') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                    } ?></button>
                 </div>
                 
             <!-- Contenido del formulario -->
@@ -65,8 +75,12 @@
                         <div id="cronometro">
                             <div id="contador">00:00:00</div>
                             <div>
-                                <button id="botoncontador" class="btn btn-primary" onclick="detenerContador()">Detener</button>
-                                <button id="botoncontador" class="btn btn-primary" onclick="reanudarContador()">Reanudar</button>
+                                <button id="botonContadorDetener" class="btn btn-primary" onclick="detenerContador()"><?php foreach ($resultadoTrans as $traduccion) {
+                                if ($traduccion['component_name'] === 'botonContadorDetener') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                                } ?></button>
+                                <button id="botoncontadorReanudar" class="btn btn-primary" onclick="reanudarContador()"><?php foreach ($resultadoTrans as $traduccion) {
+                                if ($traduccion['component_name'] === 'botoncontadorReanudar') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                                } ?></button>
                             </div>
                         </div>
                     </div>
@@ -84,7 +98,9 @@
                             <span class="numero-pregunta"><?php echo ($index + 1) . ".&ensp;"; ?></span>
                             <?php echo $pregunta['sentence']; ?>
                             <?php if ($pregunta['multioption'] == 1): ?>
-                                <br><span style="font-style: italic;font-size:15px;color:RGB(0 0 0);">(Multirespuesta)</span>
+                                <br><span id="spanMultioption" style="font-style: italic;font-size:15px;color:RGB(0 0 0);"><?php foreach ($resultadoTrans as $traduccion) {
+                                if ($traduccion['component_name'] === 'spanMultioption') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                                } ?></span>
                             <?php endif; ?>
                         </label>
         
@@ -128,7 +144,8 @@
                     </div>
                 <?php endforeach; ?>
 
-                <input type="button" id="botonTerminar" class="btn btn-primary" value="Terminar" onclick="terminarExamen()">
+                <input type="button" id="botonTerminar" class="btn btn-primary" value="<?php foreach ($resultadoTrans as $traduccion) { if ($traduccion['component_name'] === 'botonTerminar') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                } ?>" onclick="terminarExamen()">
             </form>
 
         </div>

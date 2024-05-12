@@ -227,7 +227,10 @@
             align-items: center;
         }
 
-        #botoncontador {
+        #botoncontadorDetener {
+            margin-left: 5px;
+        } 
+        #botoncontadorReanudar {
             margin-left: 5px;
         } 
         
@@ -765,7 +768,9 @@
             var nuevaPregunta = `
                 <div class="pregunta" style="">
                     <div class="enunciado ui-widget-content ui-corner-all" style="display: flex; align-items: center; margin-top:20px; margin-bottom:10px;">
-                        <input type="text" class="form-control" placeholder="Enunciado de la pregunta">
+                        <input id="inputQuestion" type="text" class="form-control" placeholder="<?php foreach ($resultadoTrans as $traduccion) {
+                        if ($traduccion['component_name'] === 'inputQuestion') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                        } ?>">
                         <button class="removeQuestion btn btn-secondary" style="margin: 5px;"><i class="bi bi-x-square"></i> </button>
                     </div>
                     <div class="respuestas">
@@ -773,7 +778,9 @@
                     </div>
                     <!-- Botón para añadir respuesta -->
                     <button id="addAnswer" class="btn btn-outline-primary" style="margin-bottom:10px;">
-                        <i class="bi bi-plus-circle-fill"></i> Añadir respuesta
+                        <i class="bi bi-plus-circle-fill"></i> <?php foreach ($resultadoTrans as $traduccion) {
+                        if ($traduccion['component_name'] === 'addAnswer') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                        } ?>
                     </button>
                 </div>
             `;
@@ -787,7 +794,9 @@
             var nuevasRespuestas = `
                 <div class="respuesta ui-widget-content ui-corner-all" style="display: flex; align-items: center; margin-top: 10px; margin-bottom:10px; margin-left:20px; margin-right:20px;">
                     <input class="form-check-input" type="checkbox" style="width: 25px !important; height: 25px !important; margin-right: 10px; margin-left: 10px;">
-                    <input type="text" class="form-control" placeholder="Enunciado de la respuesta">
+                    <input id="inputAnswer" type="text" class="form-control" placeholder="<?php foreach ($resultadoTrans as $traduccion) {
+                        if ($traduccion['component_name'] === 'inputAnswer') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                        } ?>">
                     <button class="removeAnswer btn btn-danger" style="margin:5px;"><i class="bi bi-x-square"></i></button>
                 </div>
             `;
@@ -868,7 +877,11 @@
                 data: datosJSON,
                 success: function(response) {
                     console.log(response); // Muestra la respuesta del servidor en la consola
-                    alert("Examen guardado correctamente");
+                    if(localStorage.getItem("selectedLanguage") === "en_EN") {
+                        alert("Exam successfully saved.");
+                    } else {
+                        alert("Examen guardado correctamente.");
+                    }
                     // Redirige a la página de "mis exámenes"
                     window.location.href = 'main.php?exams=own';
                 },

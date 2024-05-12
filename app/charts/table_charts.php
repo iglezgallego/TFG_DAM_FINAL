@@ -1,14 +1,22 @@
 <div class="col-lg-12">
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title">Tus resultados</h5>
+      <h5 id="tableResults" class="card-title"><?php foreach ($resultadoTrans as $traduccion) {
+            if ($traduccion['component_name'] === 'tableResults') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+            } ?></h5>
       <!-- Table with stripped rows -->
       <table class="table table table-hover">
         <thead>
           <tr>
-            <th>Título</th>
-            <th>Autor&nbsp;&nbsp;&nbsp;</th>
-            <th>Última fecha</th>
+            <th id="tableTitle"><?php foreach ($resultadoTrans as $traduccion) {
+            if ($traduccion['component_name'] === 'tableTitle') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+            } ?></th>
+            <th id="tableAutor"><?php foreach ($resultadoTrans as $traduccion) {
+            if ($traduccion['component_name'] === 'tableAutor') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+            } ?></th>
+            <th id="tableLastDo"><?php foreach ($resultadoTrans as $traduccion) {
+            if ($traduccion['component_name'] === 'tableLastDo') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+            } ?></th>
           </tr>
         </thead>
         <tbody>

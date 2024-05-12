@@ -5,7 +5,9 @@
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Exámenes creados por mi</h5>
+              <h5 class="card-title" id="tableMyexams"><?php foreach ($resultadoTrans as $traduccion) {
+                if ($traduccion['component_name'] === 'tableMyexams') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                } ?></h5>
               <p></p>
 
               <!-- Table with stripped rows -->
@@ -13,11 +15,21 @@
               <table class="table table table-hover">
                 <thead>
                   <tr>
-                    <th>Título</th>
-                    <th>Autor</th>
-                    <th>Estado</th>
-                    <th data-type="date" data-format="DD/MM/YYYY">Creación</th>
-                    <th data-type="date" data-format="DD/MM/YYYY">Ultima modificación</th>
+                    <th id="tableTitle"><?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'tableTitle') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                    } ?></th>
+                    <th id="tableAutor"><?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'tableAutor') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                    } ?></th>
+                        <th id="tableState"><?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'tableState') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                    } ?></th>
+                        <th id="tableDateCreated" data-type="date" data-format="DD/MM/YYYY"><?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'tableDateCreated') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                    } ?></th>
+                        <th id="tableDateUpdated" data-type="date" data-format="DD/MM/YYYY"><?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'tableDateUpdated') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                    } ?></th>
                     <th></th>
                     <th></th>
                     <th></th>

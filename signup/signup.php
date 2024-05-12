@@ -1,6 +1,17 @@
 <?php
     include "../conection/config.php";
+//Comprueba si el usuario existe y muestra un mensaje en caso de que se cumpla
+    if(isset($_GET['error']) && $_GET['error']=="si"){
+        echo '<script>
+            if(localStorage.getItem("selectedLanguage") === "en_EN") {
+                alert("The user or email already exists");
+            } else {
+                alert("El usuario o email ya existe");
+            }
+        </script>';
+    }
 ?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -8,13 +19,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
       
     <!-- Título de la página -->
-    <title>ExamUp - Registrarse</title>
+    <title id="titlePagSignup">eXamUp - Registrarse</title>
       
     <!-- Enlaces de bootstrap -->
     <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/sign-in/">
     <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
     <!--icono de la pestaña-->
-    <link rel="icon" href="../assets/brand/lapizvuelo.png">
+    <link rel="icon" href="../assets/brand/logotipo2.png">
     <!-- CDN jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
       
@@ -35,7 +46,7 @@
 
         // Definición de la función translate(), la cual realiza una solicitud AJAX para obtener traducciones
         function translate(language) {
-            var componentNameArray = ["floatingInput", "floatingPassword", "floatingEmail", "headline", "signupbutton", "floatingLanguage"]; // Array de nombres de componentes
+            var componentNameArray = ["titlePagSignup", "floatingInput", "floatingPassword", "floatingEmail", "headline", "signupbutton", "floatingLanguage"]; // Array de nombres de componentes
 
             // Se devuelve una promesa para manejar el resultado de la solicitud AJAX
             return new Promise(function(resolve, reject) {
@@ -53,6 +64,7 @@
                         var translations = JSON.parse(response);
 
                         // Actualizar los elementos HTML con las traducciones
+                        $('#titlePagSignup').text(translations.titlePagSignup);
                         $('#floatingInput').next('label').text(translations.floatingInput);
                         $('#floatingEmail').next('label').text(translations.floatingEmail);
                         $('#floatingPassword').next('label').text(translations.floatingPassword);

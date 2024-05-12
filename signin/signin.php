@@ -2,11 +2,23 @@
     //Traemos el valor del parámetro error. Si existe "error" y es igual a "si"
     if(isset($_GET['error']) && $_GET['error']==1){
         //Saca una pestaña emergente con el mensaje
-        echo '<script>alert("El usuario no existe o la contraseña es incorrecta");</script>';
+        echo '<script>
+            if(localStorage.getItem("selectedLanguage") === "en_EN") {
+                alert("The user does not exist or the password is incorrect.");
+            } else {
+                alert("El usuario no existe o la contraseña es incorrecta.");
+            }
+        </script>';
     }
     //Si existe "registro" y es igual a "si", saca una pestaña emergente con el mensaje
     if(isset($_GET['registro']) && $_GET['registro']=="si"){
-        echo '<script>alert("Usuario registrado, ya puedes iniciar sesión");</script>';
+        echo '<script>
+            if(localStorage.getItem("selectedLanguage") === "en_EN") {
+                alert("Log up completed, you can now sign in.");
+            } else {
+                alert("Registro completado, ya puedes iniciar sesión.");
+            }
+        </script>';
     }
 ?>
 
@@ -17,7 +29,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <!-- Título de la app -->
-    <title>eXamUp - Iniciar sesión</title>
+    <title id="titlePagSignin">eXamUp - Iniciar sesión</title>
       
     <!-- Links a estilos de bootstrap -->
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sign-in/">
@@ -47,7 +59,7 @@
 
         // Definición de la función translate(), la cual realiza una solicitud AJAX para obtener traducciones
         function translate(language) {
-            var componentNameArray = ["floatingInputSignin", "floatingPasswordSignin", "headlineSignin", "buttonaccessSignin", "signupbutton"]; // Array de nombres de componentes
+            var componentNameArray = ["titlePagSignin" ,"floatingInputSignin", "floatingPasswordSignin", "headlineSignin", "buttonaccessSignin", "signupbutton"]; // Array de nombres de componentes
 
             // Se devuelve una promesa para manejar el resultado de la solicitud AJAX
             return new Promise(function(resolve, reject) {
@@ -65,6 +77,7 @@
                         var translations = JSON.parse(response);
 
                         // Actualizar los elementos HTML con las traducciones
+                        $('#titlePagSignin').text(translations.titlePagSignin);
                         $('#floatingInputSignin').next('label').text(translations.floatingInputSignin);
                         $('#floatingPasswordSignin').next('label').text(translations.floatingPasswordSignin);
                         $('#headlineSignin').text(translations.headlineSignin);

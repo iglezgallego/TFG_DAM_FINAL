@@ -25,7 +25,13 @@
 
             if ($resultado_existencia->num_rows > 0) {
                 // Si el examen ya está compartido con el usuario, enviar un mensaje de error
-                $response = array('success' => false, 'message' => 'Este examen ya fue compartido con el usuario');
+                if (isset($_SESSION['language']) && $_SESSION['language'] === 'en_EN') {
+                            // Enviar una respuesta JSON al cliente en inglés
+                            $response = array('success' => false, 'message' => 'This test has already been shared with the user');
+                        } else {
+                            // Enviar una respuesta JSON al cliente en español
+                            $response = array('success' => false, 'message' => 'Este examen ya ha sido compartido con el usuario');
+                        }
                 echo json_encode($response);
                 
             } else {
@@ -47,17 +53,35 @@
                 // Si la inserción ha sido exitosa
                     if ($resultado2 === TRUE) {
                         // Enviar una respuesta JSON al cliente
-                        $response = array('success' => true, 'message' => 'Examen compartido correctamente' );
+                        if (isset($_SESSION['language']) && $_SESSION['language'] === 'en_EN') {
+                            // Enviar una respuesta JSON al cliente en inglés
+                            $response = array('success' => true, 'message' => 'Exam shared successfully');
+                        } else {
+                            // Enviar una respuesta JSON al cliente en español
+                            $response = array('success' => true, 'message' => 'Examen compartido correctamente');
+                        }
                         echo json_encode($response);
                     } else {
                         // Si hubo un error en la inserción, enviar una respuesta JSON con el mensaje de error
-                        $response = array('success' => false, 'message' => 'Error al compartir el examen');
+                        if (isset($_SESSION['language']) && $_SESSION['language'] === 'en_EN') {
+                            // Enviar una respuesta JSON al cliente en inglés
+                            $response = array('success' => false, 'message' => 'Error sharing the exam');
+                        } else {
+                            // Enviar una respuesta JSON al cliente en español
+                            $response = array('success' => false, 'message' => 'Error al compartir el examen');
+                        }
                         echo json_encode($response);
                     } 
+                }
+            } else {
+                // Si el email introducido no corresponde a ningún usuario, enviar una respuesta JSON con un mensaje de error
+                if (isset($_SESSION['language']) && $_SESSION['language'] === 'en_EN') {
+                            // Enviar una respuesta JSON al cliente en inglés
+                            $response = array('success' => false, 'message' => 'The email entered does not correspond to any user');
+                        } else {
+                            // Enviar una respuesta JSON al cliente en español
+                            $response = array('success' => false, 'message' => 'El email introducido no corresponde con ningún usuario');
+                        }
+                echo json_encode($response);
             }
-        } else {
-            // Si el email introducido no corresponde a ningún usuario, enviar una respuesta JSON con un mensaje de error
-            $response = array('success' => false, 'message' => 'El email introducido no corresponde con ningún usuario');
-            echo json_encode($response);
-        }
 }
