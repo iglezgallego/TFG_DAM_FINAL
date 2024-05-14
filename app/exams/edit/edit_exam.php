@@ -28,10 +28,14 @@
                     <!-- Grupo de botones para seleccionar el estado del examen -->
                     <div class="btn-group" role="group" aria-label="Tipo de examen">
                         <input type="radio" class="btn-check" id="publicCheckbox" autocomplete="off" name="examStatus" value="public" <?php echo (isset($estado) && $estado == 'public') ? 'checked' : ''; ?>>
-                        <label class="btn btn-outline-primary" for="publicCheckbox">Público</label>
+                        <label id="buttonPublic" class="btn btn-outline-primary" for="publicCheckbox"><?php foreach ($resultadoTrans as $traduccion) {
+                        if ($traduccion['component_name'] === 'buttonPublic') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                        } ?></label>
 
                         <input type="radio" class="btn-check" id="privateCheckbox" autocomplete="off" name="examStatus" value="private" <?php echo (isset($estado) && $estado == 'private') ? 'checked' : ''; ?>>
-                        <label class="btn btn-outline-primary" for="privateCheckbox">Privado</label>
+                        <label id="buttonPrivate" class="btn btn-outline-primary" for="privateCheckbox"><?php foreach ($resultadoTrans as $traduccion) {
+                        if ($traduccion['component_name'] === 'buttonPrivate') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                        } ?></label>
                     </div>
                 </div>
             </div>
@@ -68,13 +72,19 @@
                             </div>';
                         }
                         echo '</div>'; // Cierre de las respuestas
-                        
-                        // Botón para añadir respuesta
-                        echo '<button id="addAnswer" class="btn btn-outline-primary" style="margin-bottom:10px;">
-                        <i class="bi bi-plus-circle-fill"></i> Añadir respuesta
-                        </button>
 
-                        </div>'; // Cierre de la pregunta
+                        // Botón para añadir respuesta
+                        echo '<button id="addAnswer" class="btn btn-outline-primary" style="margin-bottom:10px;">';
+                        foreach ($resultadoTrans as $traduccion) {
+                            if ($traduccion['component_name'] === 'addAnswer') {
+                                $contenido = $traduccion[$_SESSION['language']];
+                                echo '<i class="bi bi-plus-circle-fill"></i> ' . $contenido;
+                                break;
+                            }
+                        }
+                        echo '</button>';
+
+                        echo '</div>'; // Cierre de la pregunta
                     }
                }
             ?>
@@ -103,18 +113,27 @@
                     </select>
                 </div>
                 <button id="addQuestion" type="button" class="btn btn-primary" style="border-radius:0px 0px 5px 5px;">
-                    <i class="bi bi-plus-circle"></i> Añadir pregunta
+                    <i class="bi bi-plus-circle"></i> <?php foreach ($resultadoTrans as $traduccion) {
+                        if ($traduccion['component_name'] === 'addQuestion') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                        } ?>
                 </button>
             </div> 
         </div>
     </div>
 
 <?php
-    echo '
-    <div id="botonguardar" style="text-align:center;">
-        <button id="guardarExamen" class="btn btn-primary" data-gid-exam="'.$gid_exam.'" onclick="editarExamen(this.getAttribute(\'data-gid-exam\'))">
-            <i class="bi bi-check-circle"> Editar examen</i>
-        </button>
-    </div>';
+        echo '
+        <div id="botonguardar" style="text-align:center;">
+            <button id="guardarExamen" class="btn btn-primary" data-gid-exam="'.$gid_exam.'" onclick="editarExamen(this.getAttribute(\'data-gid-exam\'))">
+                <i class="bi bi-check-circle"></i> ';
+                foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'guardarExamen') {
+                        $contenido = $traduccion[$_SESSION['language']];
+                        echo  $contenido;
+                        break;
+                    }
+                }
+        echo '</button>
+        </div>';
 ?>
 </div>

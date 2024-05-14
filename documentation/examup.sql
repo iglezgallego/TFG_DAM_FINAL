@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-05-2024 a las 14:55:57
+-- Tiempo de generación: 14-05-2024 a las 21:49:24
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -356,7 +356,21 @@ INSERT INTO `translations` (`id_translation`, `component_name`, `es_ES`, `en_EN`
 (58, 'infoTotalquestion', 'Total de preguntas:', 'Total number of questions:'),
 (59, 'infoTotalcorrect', 'Respuestas correctas:', 'Correct answers:'),
 (60, 'infoPercentage', 'Porcentaje de respuestas correctas:', 'Percentage of correct answers:'),
-(61, 'infoTime', 'Tiempo transcurrido:', 'Time spend:');
+(61, 'infoTime', 'Tiempo transcurrido:', 'Time spend:'),
+(62, 'tableChartDate', 'Fecha', 'Date'),
+(63, 'tableChartResult', 'Resultado', 'Result'),
+(64, 'tableChartTime', 'Tiempo', 'Time'),
+(65, 'tableTitleResult', 'TOP por resultado', 'TOP by result'),
+(66, 'tableTitleScore', 'TOP por resultado y tiempo', 'TOP by result and time'),
+(67, 'titleChartScore', 'Evolutivo por resultado y tiempo', 'Evolution by result and time'),
+(68, 'titleChartResult', 'Evolutivo por resultado', 'Evolution by result'),
+(69, 'profileTitleDetails', 'Detalles del perfil', 'Profile details'),
+(70, 'profileNameDetails', 'Nombre del usuario', 'User name'),
+(71, 'profilePasswordDetails', 'Contraseña', 'Password'),
+(72, 'toggle-password', 'Mostrar contraseña', 'Show password'),
+(73, 'profileLanguageDetails', 'Idioma', 'Language'),
+(74, 'profileEditButton', 'Guardar cambios', 'Save changes'),
+(75, 'profileEdit', 'Editar perfil', 'Edit profile');
 
 -- --------------------------------------------------------
 
@@ -507,7 +521,7 @@ ALTER TABLE `shared_exams`
 -- AUTO_INCREMENT de la tabla `translations`
 --
 ALTER TABLE `translations`
-  MODIFY `id_translation` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id_translation` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT de la tabla `users`

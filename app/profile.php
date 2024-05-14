@@ -42,7 +42,10 @@
                         </li>
 
                         <li class="nav-item">
-                          <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Editar Perfil</button>
+                          <button id="profileEdit" class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit"><?php foreach ($resultadoTrans as $traduccion) {
+                                if ($traduccion['component_name'] === 'profileEdit') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                                } 
+                              ?></button>
                         </li>
 
                       </ul>
@@ -50,15 +53,24 @@
 
                         <div class="tab-pane fade show active profile-overview" id="profile-overview">
                             
-                          <h5 class="card-title">Detalles del perfil</h5>
+                          <h5 id="profileTitleDetails" class="card-title"><?php foreach ($resultadoTrans as $traduccion) {
+                                if ($traduccion['component_name'] === 'profileTitleDetails') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                                } 
+                              ?></h5>
 
                           <div class="row">
-                            <div class="col-lg-3 col-md-4 label ">Nombre de usuario</div>
+                            <div id="profileNameDetails" class="col-lg-3 col-md-4 label "><?php foreach ($resultadoTrans as $traduccion) {
+                                if ($traduccion['component_name'] === 'profileNameDetails') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                                } 
+                              ?></div>
                             <div class="col-lg-9 col-md-8"><?php /* Obtener el nombre */ echo ($_SESSION['username']) ?></div>
                           </div>
 
                            <div class="row">
-                                <div class="col-lg-3 col-md-4 label">Contraseña</div>
+                                <div id="profilePasswordDetails" class="col-lg-3 col-md-4 label"><?php foreach ($resultadoTrans as $traduccion) {
+                                if ($traduccion['component_name'] === 'profilePasswordDetails') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                                } 
+                              ?></div>
                                 <div class="col-lg-6 col-md-6">
                                     <input id="password-input" class="form-control" type="password" style="background:white; border:none; font-size:0.95rem;" value=
                                     <?php //Obtener la contraseña del usuario
@@ -71,7 +83,10 @@
                                     disabled>
                                 </div>
                                 <div class="col-lg-3 col-md-2">
-                                    <button id="toggle-password" class="btn btn-secondary" style="color:blue; border:none; background:white; font-size: 0.95rem; padding: 0.25rem 0.5rem; line-height: 1;">Mostrar contraseña</button>
+                                    <button id="toggle-password" class="btn btn-secondary" style="color:blue; border:none; background:white; font-size: 0.95rem; padding: 0.25rem 0.5rem; line-height: 1;"><?php foreach ($resultadoTrans as $traduccion) {
+                                if ($traduccion['component_name'] === 'toggle-password') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                                } 
+                              ?></button>
                                 </div>
                             </div>
                             
@@ -91,7 +106,10 @@
                           </div>
 
                           <div class="row">
-                            <div class="col-lg-3 col-md-4 label">Idioma</div>
+                            <div id="profileLanguageDetails" class="col-lg-3 col-md-4 label"><?php foreach ($resultadoTrans as $traduccion) {
+                                if ($traduccion['component_name'] === 'profileLanguageDetails') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                                } 
+                              ?></div>
                             <div class="col-lg-9 col-md-8">
                               <?php
                                     //Obtener el idioma del usuario
@@ -112,14 +130,20 @@
                           <form method="POST" action="update_profile.php">
                               
                             <div class="row mb-3">
-                              <label for="username" class="col-md-4 col-lg-3 col-form-label">Usuario</label>
+                              <label id="profileNameDetails" for="username" class="col-md-4 col-lg-3 col-form-label"><?php foreach ($resultadoTrans as $traduccion) {
+                                if ($traduccion['component_name'] === 'profileNameDetails') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                                } 
+                              ?></label>
                               <div class="col-md-8 col-lg-9">
                                 <input name="username" type="text" class="form-control" id="fullName" value=<?php echo ($_SESSION['username']) ?>>
                               </div>
                             </div>
 
                             <div class="row mb-3">
-                              <label for="password" class="col-md-4 col-lg-3 col-form-label">Contraseña</label>
+                              <label id="profilePasswordDetails" for="password" class="col-md-4 col-lg-3 col-form-label"><?php foreach ($resultadoTrans as $traduccion) {
+                                if ($traduccion['component_name'] === 'profilePasswordDetails') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                                } 
+                              ?></label>
                               <div class="col-md-8 col-lg-9">
                                 <input name ="password" id="password-input" class="form-control" type="password" style="background:white; font-size:0.95rem;" value= <?php echo $password ?>>
                               </div>
@@ -133,7 +157,10 @@
                             </div>
 
                             <div class="row mb-3">
-                                <label for="language" class="col-md-4 col-lg-3 col-form-label">Idioma</label>
+                                <label id="profileLanguageDetails" for="language" class="col-md-4 col-lg-3 col-form-label"><?php foreach ($resultadoTrans as $traduccion) {
+                                if ($traduccion['component_name'] === 'profileLanguageDetails') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                                } 
+                              ?></label>
                                 <div class="col-md-8 col-lg-9">
                                     <select name="lang_key" class="form-select" id="lang_key">
                                         <?php
@@ -161,7 +188,10 @@
                             </div>
                               
                             <div class="text-center">
-                              <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                              <button id="profileEditButton" type="submit" class="btn btn-primary"><?php foreach ($resultadoTrans as $traduccion) {
+                                if ($traduccion['component_name'] === 'profileEditButton') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                                } 
+                              ?></button>
                             </div>
                               
                           </form><!-- End Profile Edit Form -->

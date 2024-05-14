@@ -13,12 +13,18 @@
 <div class="col-lg-4">
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title">TOP por nota</h5>
+      <h5 id="tableTitleResult" class="card-title"><?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'tableTitleResult') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                    } ?></h5>
         <table class="table table-striped">
             <thead>
               <tr>
-                <th>Fecha</th>
-                <th>Resultado</th>
+                <th id="tableChartDate"><?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'tableChartDate') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                    } ?></th>
+                <th id="tableChartResult"><?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'tableChartResult') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                    } ?></th>
               </tr>
             </thead>
             <tbody>
@@ -52,7 +58,9 @@
 <div class="col-lg-8" >
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title">Evolutivo por nota</h5>
+      <h5 id="titleChartResult" class="card-title"><?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'titleChartResult') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                    } ?></h5>
         <?php
         // Realizas la consulta SQL
         $consulta3 = "SELECT result, DATE_FORMAT(date_result, '%d-%m-%Y') AS date_result
@@ -79,7 +87,7 @@
             'labels' => $fechas, // Fechas en el eje X
             'datasets' => [
                 [
-                    'label' => 'Nota', // Etiqueta de la serie de datos
+                    'label' => 'Result', // Etiqueta de la serie de datos
                     'data' => $notas, // Notas en el eje Y
                     'fill' => false,
                     'borderColor' => 'rgb(75, 192, 192)',
@@ -118,13 +126,21 @@
 <div class="col-lg-4">
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title">TOP por nota y tiempo</h5>
+      <h5 id="tableTitleScore" class="card-title"><?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'tableTitleScore') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                    } ?></h5>
         <table class="table table-striped">
             <thead>
               <tr>
-                <th>Fecha</th>
-                <th>Resultado</th>
-                <th>Tiempo</th>
+                <th id="tableChartDate"><?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'tableChartDate') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                    } ?></th>
+                <th id="tableChartResult"><?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'tableChartResult') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                    } ?></th>
+                <th id="tableChartTime"><?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'tableChartTime') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                    } ?></th>
                 <th>Score</th>
               </tr>
             </thead>
@@ -173,7 +189,9 @@
 <div class="col-lg-8" >
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title">Evolutivo por nota y tiempo</h5>
+      <h5 id="titleChartScore" class="card-title"><?php foreach ($resultadoTrans as $traduccion) {
+                    if ($traduccion['component_name'] === 'titleChartScore') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
+                    } ?></h5>
         <?php
         // Realizas la consulta SQL
         $consulta4 = "
