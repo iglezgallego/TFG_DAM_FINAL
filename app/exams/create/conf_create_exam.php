@@ -21,12 +21,11 @@
 
     // Obtengo el gid_exam
     // Combina la ID del usuario, el título del examen y la marca de tiempo actual
+    $giduser = $_SESSION['giduser'];
     $combinedvalue = $giduser . $titulo . time();
     // Calcula el hash único utilizando el algoritmo SHA-256
     $gidexam = hash('sha256', $combinedvalue);
 
-    // Obtengo el gid_user a través de la variable de sesión
-    $giduser = $_SESSION['giduser'];
     // Por defecto, al crear, favorito va a ser false
     $favorite = 0;
     // La fecha de creado obtiene la fecha de hoy
@@ -35,7 +34,7 @@
     // Iterar sobre las preguntas
     foreach ($preguntas as $pregunta) {
         // Acceder al enunciado de la pregunta y asegurarnos de que esté codificado en UTF-8
-        $enunciado = mb_convert_encoding($pregunta['sentence'], 'UTF-8');
+        $enunciado = empty($pregunta['sentence']) ? 'untitled' : mb_convert_encoding($pregunta['sentence'], 'UTF-8');
 
         // Obtener las respuestas de la pregunta
         $respuestas = $pregunta['respuestas'];
@@ -106,7 +105,7 @@
     if ($resultado == TRUE && $resultado2 == TRUE) {
         echo "Registro actualizado correctamente";
     // En caso contrario muestra el error
-    }else{
+    } else {
         echo "Error al actualizar el registro: . $conection->error; ";
     }
 

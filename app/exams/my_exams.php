@@ -39,7 +39,17 @@
                 </thead>
                 <tbody>
                     <?php 
-                        $consulta = "SELECT * FROM exams WHERE gid_user = '".$_SESSION['giduser']."' ";
+                        $consulta = "SELECT 
+                        id_exam,
+                        gid_exam,
+                        gid_user,
+                        title,
+                        DATE_FORMAT(date_created, '%d-%m-%Y') AS date_created,
+                        DATE_FORMAT(date_updated, '%d-%m-%Y') AS date_updated,
+                        status
+                        FROM exams WHERE gid_user = '".$_SESSION['giduser']."'
+                        ORDER BY date_created DESC;
+                        ";
                         $resultado = $conection->query($consulta);
                         while($fila=$resultado->fetch_assoc()){
                             $title = $fila['title'];
@@ -48,16 +58,16 @@
                             $created = $fila['date_created'];
                             $updated = $fila['date_updated'];
                             
-                            // Reemplazar "0000-00-00" con "-" si la fecha de modificación es "0000-00-00"
-                            $updated = ($updated == "0000-00-00") ? "-" : $updated;
-                            echo 
-                                '<tr>
-                                <td><a class="nav-link" href="?exams=do&gid_exam='.$fila['gid_exam'].'">'.$title.'</a></td>
-                                <td>'.$author.'</td>
-                                <td>'.$status.'</td>
-                                <td>'.$created.'</td>
-                                <td>'.$updated.'</td>
-                                <td>';
+                            // Reemplazar "00-00-0000" con "-" si la fecha de modificación es "0000-00-00"
+                            $updated = ($updated == "00-00-0000") ? "-" : $updated;
+                            echo '<tr>
+                            <td><a class="nav-link" href="?exams=do&gid_exam=' . $fila['gid_exam'] . '">' . (strlen($title) > 60 ? substr($title, 0, 80) . "..." : $title) . '</a></td>
+                            <td>' . $author . '</td>
+                            <td style="font-size:20px;"><i class="' . $status . '"></i></td>
+                            <td>' . $created . '</td>
+                            <td>' . $updated . '</td>
+                            <td>';
+
                             
                                 $consulta2 = "SELECT * FROM favorites WHERE gid_user = '".$_SESSION['giduser']."' AND gid_exam = '".$fila['gid_exam']."' ";
                                 $resultado2 = $conection->query($consulta2);

@@ -104,7 +104,12 @@
             }
         $(document).ready(function() {
             cambiarFavorito();
+            $('.onPageFav').on('click', function() {
+                $(this).closest('tr').hide();
+        })
         });
+        
+         
         
         ///////////////////////////////FUNCIONES COMPARTIR EXAMENES ////////////////////////////////////////////
         
@@ -737,31 +742,47 @@
         
         // Función para obtener el valor de la opción seleccionada
         function obtenerTipoExamen() {
-            // Obtener todos los botones de opción
             var opciones = document.getElementsByName('examStatus');
-
-            // Iterar sobre los botones de opción para encontrar el marcado
             for (var i = 0; i < opciones.length; i++) {
                 if (opciones[i].checked) {
-                    // Si se encuentra una opción marcada, devolver su valor
                     return opciones[i].value;
                 }
             }
-            // Si no se encuentra ninguna opción marcada, devolver null
             return null;
         }
 
-        // Función para actualizar el valor de tipoExamen cuando se hace clic en un botón de opción
         function actualizarTipoExamen() {
             var statusExamen = obtenerTipoExamen();
             console.log("El tipo de examen seleccionado es: " + statusExamen);
         }
 
-        // Agregar un listener de eventos 'click' a cada botón de opción
         var opcionesStatus = document.getElementsByName('examStatus');
         opcionesStatus.forEach(function(opcion) {
             opcion.addEventListener('click', actualizarTipoExamen);
         });
+
+        // Función para validar las condiciones del examen
+        function validarExamen() {
+            var hayPreguntas = $(".pregunta").length > 0;
+            var todasLasPreguntasValidas = true;
+
+            $(".pregunta").each(function(index, preguntaElement) {
+                var hayRespuestasCorrectas = false;
+                $(preguntaElement).find(".respuesta .form-check-input").each(function(index, respuestaElement) {
+                    if ($(respuestaElement).prop("checked")) {
+                        hayRespuestasCorrectas = true;
+                        return false; // Salir del bucle si se encuentra una respuesta correcta
+                    }
+                });
+
+                if (!hayRespuestasCorrectas) {
+                    todasLasPreguntasValidas = false;
+                    return false; // Salir del bucle si una pregunta no tiene respuestas correctas
+                }
+            });
+
+            $("#guardarExamen").prop("disabled", !(hayPreguntas && todasLasPreguntasValidas));
+        }
 
         // Función para agregar una nueva pregunta con efectos de jQuery UI
         function agregarPregunta() {
@@ -786,6 +807,7 @@
             `;
             $(".preguntas").append(nuevaPregunta);
             $(".pregunta").hide().fadeIn(); // Efecto al agregar una pregunta
+            validarExamen(); // Validar examen después de agregar una pregunta
         }
 
         // Función para agregar una nueva respuesta a una pregunta con efectos de jQuery UI
@@ -796,18 +818,20 @@
                     <input class="form-check-input" type="checkbox" style="width: 25px !important; height: 25px !important; margin-right: 10px; margin-left: 10px;">
                     <input id="inputAnswer" type="text" class="form-control" placeholder="<?php foreach ($resultadoTrans as $traduccion) {
                         if ($traduccion['component_name'] === 'inputAnswer') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
-                        } ?>">
+                    } ?>">
                     <button class="removeAnswer btn btn-danger" style="margin:5px;"><i class="bi bi-x-square"></i></button>
                 </div>
             `;
             pregunta.find(".respuestas").append(nuevasRespuestas);
             $(".respuesta").hide().fadeIn(); // Efecto al agregar una respuesta
+            validarExamen(); // Validar examen después de agregar una respuesta
         }
 
         // Función para eliminar una respuesta con efectos de jQuery UI
         function eliminarRespuesta(event) {
             $(event.target).closest('.respuesta').slideUp("fast", function() {
                 $(this).remove();
+                validarExamen(); // Validar examen después de eliminar una respuesta
             });
         }
 
@@ -815,57 +839,67 @@
         function eliminarPregunta(event) {
             $(event.target).closest('.pregunta').slideUp("fast", function() {
                 $(this).remove();
+                validarExamen(); // Validar examen después de eliminar una pregunta
             });
         }
 
         // Evento de clic para añadir una nueva pregunta
-        $("#addQuestion").click(agregarPregunta);
+        $("#addQuestion").click(function() {
+            agregarPregunta();
+            validarExamen(); // Validar examen después de agregar una pregunta
+        });
 
         // Evento de clic para añadir una nueva respuesta
-        $(document).on('click', '#addAnswer', agregarRespuesta);
+        $(document).on('click', '#addAnswer', function(event) {
+            agregarRespuesta(event);
+            validarExamen(); // Validar examen después de agregar una respuesta
+        });
 
         // Evento de clic para eliminar una respuesta
-        $(document).on('click', '.removeAnswer', eliminarRespuesta);
+        $(document).on('click', '.removeAnswer', function(event) {
+            eliminarRespuesta(event);
+            validarExamen(); // Validar examen después de eliminar una respuesta
+        });
 
         // Evento de clic para eliminar una pregunta
-        $(document).on('click', '.removeQuestion', eliminarPregunta);
+        $(document).on('click', '.removeQuestion', function(event) {
+            eliminarPregunta(event);
+            validarExamen(); // Validar examen después de eliminar una pregunta
+        });
 
+        // Evento de cambio para marcar/desmarcar una respuesta como correcta
+        $(document).on('change', '.respuesta .form-check-input', validarExamen);
 
         // Función para obtener los datos del formulario y convertirlos a JSON
         function obtenerDatosJSON() {
-            // Objeto para almacenar los datos del examen
             var datos_examen = {
-                titulo: $("#inputTitle").val(), // Obtener el título del examen del campo de entrada
-                status: obtenerTipoExamen(), // Obtener el estatus del examen mediante otra función
-                preguntas: [], // Inicializar un array para almacenar las preguntas del examen
+                titulo: $("#inputTitle").val(),
+                status: obtenerTipoExamen(),
+                preguntas: [],
                 typekey: $("#examType").val()
             };
 
-            // Iterar sobre todas las preguntas presentes en el formulario
             $(".pregunta").each(function(index, preguntaElement) {
-                // Objeto para almacenar los datos de una pregunta individual
                 var pregunta = {
-                    type: $(preguntaElement).find(".form-select").val(), // Obtener el tipo de la pregunta
-                    sentence: $(preguntaElement).find(".form-control").val(), // Obtener el enunciado de la pregunta
-                    respuestas: [] // Inicializar un array para almacenar las respuestas de la pregunta
+                    type: $(preguntaElement).find(".form-select").val(),
+                    sentence: $(preguntaElement).find(".form-control").val(),
+                    respuestas: []
                 };
 
-                // Iterar sobre todas las respuestas presentes en la pregunta actual
                 $(preguntaElement).find(".respuesta").each(function(index, respuestaElement) {
-                    // Objeto para almacenar los datos de una respuesta individual
                     var respuesta = {
-                        answer: $(respuestaElement).find(".form-control").val(), // Obtener el texto de la respuesta
-                        correct: $(respuestaElement).find(".form-check-input").prop("checked") // Verificar si la respuesta es correcta
+                        answer: $(respuestaElement).find(".form-control").val(),
+                        correct: $(respuestaElement).find(".form-check-input").prop("checked")
                     };
-                    pregunta.respuestas.push(respuesta); // Agregar la respuesta al array de respuestas de la pregunta
+                    pregunta.respuestas.push(respuesta);
                 });
 
-                datos_examen.preguntas.push(pregunta); // Agregar la pregunta al array de preguntas del examen
+                datos_examen.preguntas.push(pregunta);
             });
 
-            var datosJSON = JSON.stringify(datos_examen); // Convertir el objeto a JSON
-            console.log("Datos del JSON:", datosJSON); // Imprimir datos en la consola para verificar
-            return datosJSON; // Devolver el JSON generado
+            var datosJSON = JSON.stringify(datos_examen);
+            console.log("Datos del JSON:", datosJSON);
+            return datosJSON;
         }
 
         // Función para enviar los datos JSON a PHP y guardar el examen en la base de datos
@@ -873,24 +907,28 @@
             var datosJSON = obtenerDatosJSON();
             $.ajax({
                 type: "POST",
-                url: "exams/create/conf_create_exam.php", // Archivo PHP que maneja la inserción en la base de datos
+                url: "exams/create/conf_create_exam.php",
                 data: datosJSON,
                 success: function(response) {
-                    console.log(response); // Muestra la respuesta del servidor en la consola
+                    console.log(response);
                     if(localStorage.getItem("selectedLanguage") === "en_EN") {
                         alert("Exam successfully saved.");
                     } else {
                         alert("Examen guardado correctamente.");
                     }
-                    // Redirige a la página de "mis exámenes"
                     window.location.href = 'main.php?exams=own';
                 },
                 error: function(xhr, status, error) {
-                    console.error(error); // Muestra errores en la consola en caso de que ocurran
+                    console.error(error);
                     alert("Error al guardar el examen");
                 }
             });
         }
+
+        // Validar examen al cargar la página
+        validarExamen();
+
+
         ///////////// FUNCIONES EDITAR EXAMENES /////////////////
         
         function editarExamen(gidExam) {

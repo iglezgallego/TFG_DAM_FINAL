@@ -56,7 +56,8 @@
                           <h5 id="profileTitleDetails" class="card-title"><?php foreach ($resultadoTrans as $traduccion) {
                                 if ($traduccion['component_name'] === 'profileTitleDetails') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
                                 } 
-                              ?></h5>
+                              ?>
+                            </h5>
 
                           <div class="row">
                             <div id="profileNameDetails" class="col-lg-3 col-md-4 label "><?php foreach ($resultadoTrans as $traduccion) {
@@ -83,10 +84,9 @@
                                     disabled>
                                 </div>
                                 <div class="col-lg-3 col-md-2">
-                                    <button id="toggle-password" class="btn btn-secondary" style="color:blue; border:none; background:white; font-size: 0.95rem; padding: 0.25rem 0.5rem; line-height: 1;"><?php foreach ($resultadoTrans as $traduccion) {
-                                if ($traduccion['component_name'] === 'toggle-password') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
-                                } 
-                              ?></button>
+                                    <button id="toggle-password" class="btn btn-secondary" style="color:blue; border:none; background:white; font-size: 20px; line-height: 0;">
+                                        <i class="bi bi-eye-fill"></i>
+                                    </button>
                                 </div>
                             </div>
                             
@@ -208,22 +208,26 @@
         </main>
         <script>
             // Script para ocultar o mostrar la contraseña //
-            // Escucha el evento 'click' en el botón con el id
+            // Añade un listener para el evento 'click' en el botón con el id 'toggle-password'
             document.getElementById('toggle-password').addEventListener('click', function () {
                 // Obtiene el elemento del campo de contraseña por su id
                 var passwordInput = document.getElementById('password-input');
+                // Obtiene el icono dentro del botón que se ha hecho clic
+                var icon = this.querySelector('i');
 
                 // Verifica si el tipo de entrada del campo de contraseña es 'password'
                 if (passwordInput.type === 'password') {
                     // Si el tipo de entrada es 'password', cambia el tipo a 'text' para mostrar la contraseña
                     passwordInput.type = 'text';
-                    // Cambia el texto del botón a 'Ocultar contraseña'
-                    this.textContent = 'Ocultar contraseña';
+                    // Cambia el icono de "ojo abierto" a "ojo cerrado"
+                    icon.classList.remove('bi-eye-fill');
+                    icon.classList.add('bi-eye-slash-fill');
                 } else {
                     // Si el tipo de entrada no es 'password', lo cambia a 'password' para ocultar la contraseña
                     passwordInput.type = 'password';
-                    // Cambia el texto del botón a 'Mostrar contraseña'
-                    this.textContent = 'Mostrar contraseña';
+                    // Cambia el icono de "ojo cerrado" a "ojo abierto"
+                    icon.classList.remove('bi-eye-slash-fill');
+                    icon.classList.add('bi-eye-fill');
                 }
             });
         </script>

@@ -223,7 +223,7 @@
       <main class="px-3">
         <h1 style="font-family:matisan; font-size:80px; -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: rgb(37 114 198); text-stroke-width: 1px; text-stroke-color: rgb(37 114 198);">e<img class="mb-4" src="assets/brand/logotipo2.png" alt="" width="60" height="60">amUp</h1>
-        <p class="lead" id="appDescription">Descripción de la app</p>
+        <p class="lead" id="appDescription">Descripción de la app<p>
         <p class="lead">
           <a href="signin/signin.php" id="mainAccess" class="btn btn-lg btn-light fw-bold border-white bg-white">Acceder</a>
         </p>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-05-2024 a las 14:55:57
+-- Tiempo de generación: 11-05-2024 a las 19:23:15
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -44,14 +44,12 @@ CREATE TABLE `exams` (
 INSERT INTO `exams` (`id_exam`, `gid_exam`, `gid_user`, `title`, `date_created`, `date_updated`, `status`) VALUES
 (4, '12', '69736162656c69736162656c40676d61696c2e636f6d', 'prueba3', '2024-04-01', '2024-05-10', 'public'),
 (5, '13', '616c626572746f616c626572746f40676d61696c2e636f6d', 'examen de Alberto', '2024-04-03', '2024-04-04', 'private'),
-(30, 'b7e6fea88d6aad8e5dc0beda93445d079b30c520a3551161f6374caf6f4713e1', '69736169736140676d61696c2e636f6d', 'cdcdvcfvfdv', '2024-04-28', '2024-05-12', 'private'),
+(30, 'b7e6fea88d6aad8e5dc0beda93445d079b30c520a3551161f6374caf6f4713e1', '69736169736140676d61696c2e636f6d', 'prueba con varias opciones prueba con varias opciones prueba con varias opciones prueba con varias opciones prueba con varias opciones', '2024-04-28', '2024-05-01', 'private'),
 (31, 'a96f13190cb6a22d04cf30b035a2c417693c9ed891495133f46cea37f849925a', '69736169736140676d61696c2e636f6d', 'Examen de prueba 2', '2024-05-01', '2024-05-01', 'public'),
 (34, '6fc166f112e551c10c9225abc483baaf19123ac4aefb09349c496ba4be466289', '69736169736140676d61696c2e636f6d', 'Examen isa prueba', '2024-05-05', '2024-05-05', 'private'),
 (35, '3b4032250860abf7e3ec2ead6068eadac53862ccf8ea6352feef3e8aeff722b3', '69736169736140676d61696c2e636f6d', 'Examen de Isabel ', '2024-05-05', '2024-05-05', 'private'),
 (36, '99e58e98078257c7033575e5e6f738f833cf2f656f1f3adbd703be25aaae8764', '69736162656c69736162656c40676d61696c2e636f6d', 'Examen tipo test en Economía', '2024-05-05', '0000-00-00', 'private'),
-(37, '7f5a6945232135c32ff73643d7c23a0fe62ee57536a200e7aa07b719d7efb7f2', '726f7361726f736140676d61696c2e636f6d', 'Examen de geografía', '2024-05-10', '2024-05-10', 'public'),
-(38, 'e2043ca955ab0b56538b0ef66708a54768d11c526ae7a8960a11542c72ea2e61', '69736169736140676d61696c2e636f6d', 'Examen prueba en inglés', '2024-05-12', '0000-00-00', 'private'),
-(39, '5876ada07e0b10dfab549d5e9ce6f1043bced2a4929c545f913658865a199e0a', '69736169736140676d61696c2e636f6d', 'Prueba ingles 2', '2024-05-12', '0000-00-00', 'private');
+(37, '7f5a6945232135c32ff73643d7c23a0fe62ee57536a200e7aa07b719d7efb7f2', '726f7361726f736140676d61696c2e636f6d', 'Examen de geografía', '2024-05-10', '2024-05-10', 'public');
 
 -- --------------------------------------------------------
 
@@ -74,8 +72,7 @@ INSERT INTO `favorites` (`id_favorite`, `gid_exam`, `gid_user`) VALUES
 (70, '3b4032250860abf7e3ec2ead6068eadac53862ccf8ea6352feef3e8aeff722b3', '69736169736140676d61696c2e636f6d'),
 (71, '6fc166f112e551c10c9225abc483baaf19123ac4aefb09349c496ba4be466289', '69736169736140676d61696c2e636f6d'),
 (72, '12', '726f7361726f736140676d61696c2e636f6d'),
-(73, '7f5a6945232135c32ff73643d7c23a0fe62ee57536a200e7aa07b719d7efb7f2', '726f7361726f736140676d61696c2e636f6d'),
-(75, 'b7e6fea88d6aad8e5dc0beda93445d079b30c520a3551161f6374caf6f4713e1', '69736169736140676d61696c2e636f6d');
+(73, '7f5a6945232135c32ff73643d7c23a0fe62ee57536a200e7aa07b719d7efb7f2', '726f7361726f736140676d61696c2e636f6d');
 
 -- --------------------------------------------------------
 
@@ -119,6 +116,9 @@ CREATE TABLE `questions` (
 --
 
 INSERT INTO `questions` (`id_question`, `gid_exam`, `type_key`, `sentence`, `options`, `multioption`) VALUES
+(49, 'b7e6fea88d6aad8e5dc0beda93445d079b30c520a3551161f6374caf6f4713e1', 779442001, '¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?', '[{\"answer\":\"azulgatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogato\",\"correct\":false},{\"answer\":\"verdegatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogato\",\"correct\":false},{\"answer\":\"moradogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogato\",\"correct\":true}]', 0),
+(50, 'b7e6fea88d6aad8e5dc0beda93445d079b30c520a3551161f6374caf6f4713e1', 779442001, '¿Comidas?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?', '[{\"answer\":\"pizzagatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogato\",\"correct\":true},{\"answer\":\"coles de bruselasgatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogato\",\"correct\":false},{\"answer\":\"patatas fritasgatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogato\",\"correct\":true}]', 1),
+(51, 'b7e6fea88d6aad8e5dc0beda93445d079b30c520a3551161f6374caf6f4713e1', 779442001, '¿Animal?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?', '[{\"answer\":\"ranagatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogato\",\"correct\":false},{\"answer\":\"gatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogato\",\"correct\":true},{\"answer\":\"perrogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogato\",\"correct\":false}]', 0),
 (57, 'a96f13190cb6a22d04cf30b035a2c417693c9ed891495133f46cea37f849925a', 779442001, '¿Cómo se llama mi madre?', '[{\"answer\":\"Clara\",\"correct\":false},{\"answer\":\"María\",\"correct\":false},{\"answer\":\"Rosa\",\"correct\":true}]', 0),
 (58, 'a96f13190cb6a22d04cf30b035a2c417693c9ed891495133f46cea37f849925a', 779442001, '¿Cómo se llama mi padre?', '[{\"answer\":\"Joaquin\",\"correct\":true},{\"answer\":\"Fernando\",\"correct\":false},{\"answer\":\"Francisco\",\"correct\":false}]', 0),
 (59, 'a96f13190cb6a22d04cf30b035a2c417693c9ed891495133f46cea37f849925a', 779442001, '¿Cómo se llaman mis gatos?', '[{\"answer\":\"Pepe\",\"correct\":false},{\"answer\":\"Ciri\",\"correct\":true},{\"answer\":\"Coco\",\"correct\":false},{\"answer\":\"Choli\",\"correct\":true}]', 1),
@@ -141,14 +141,7 @@ INSERT INTO `questions` (`id_question`, `gid_exam`, `type_key`, `sentence`, `opt
 (104, '7f5a6945232135c32ff73643d7c23a0fe62ee57536a200e7aa07b719d7efb7f2', 779442001, '¿Cual es la capital de Argentina?', '[{\"answer\":\"Buenos Aires\",\"correct\":true},{\"answer\":\"Chipre\",\"correct\":false},{\"answer\":\"Puerto Plata\",\"correct\":false}]', 0),
 (105, '7f5a6945232135c32ff73643d7c23a0fe62ee57536a200e7aa07b719d7efb7f2', 779442001, '¿Dónde están las cataratas Victoria?', '[{\"answer\":\"Asia\",\"correct\":false},{\"answer\":\"Europa\",\"correct\":false},{\"answer\":\"Africa\",\"correct\":true},{\"answer\":\"América\",\"correct\":false}]', 0),
 (106, '7f5a6945232135c32ff73643d7c23a0fe62ee57536a200e7aa07b719d7efb7f2', 779442001, '¿Cuales de estas ciudades pertenecen a Castilla La Mancha?', '[{\"answer\":\"Cuenca\",\"correct\":true},{\"answer\":\"Salamanca\",\"correct\":false},{\"answer\":\"Alicante\",\"correct\":false},{\"answer\":\"Guadalajara\",\"correct\":true}]', 1),
-(107, '7f5a6945232135c32ff73643d7c23a0fe62ee57536a200e7aa07b719d7efb7f2', 779442001, 'JAHSHSHS', '[{\"answer\":\"GVGRB\",\"correct\":true},{\"answer\":\"BGBGB\",\"correct\":false}]', 0),
-(108, 'e2043ca955ab0b56538b0ef66708a54768d11c526ae7a8960a11542c72ea2e61', 779442001, 'What is my name?', '[{\"answer\":\"Rita\",\"correct\":false},{\"answer\":\"Anna\",\"correct\":false},{\"answer\":\"Isabel\",\"correct\":true}]', 0),
-(109, 'e2043ca955ab0b56538b0ef66708a54768d11c526ae7a8960a11542c72ea2e61', 779442001, 'How old am I?', '[{\"answer\":\"13\",\"correct\":false},{\"answer\":\"32\",\"correct\":true},{\"answer\":\"26\",\"correct\":false}]', 0),
-(110, '5876ada07e0b10dfab549d5e9ce6f1043bced2a4929c545f913658865a199e0a', 779442001, 'jajaja', '[{\"answer\":\"rfrf\",\"correct\":false},{\"answer\":\"rgerg\",\"correct\":true},{\"answer\":\"grege\",\"correct\":false}]', 0),
-(111, '5876ada07e0b10dfab549d5e9ce6f1043bced2a4929c545f913658865a199e0a', 779442001, 'grggr', '[{\"answer\":\"rgeg\",\"correct\":true},{\"answer\":\"rgeg\",\"correct\":false}]', 0),
-(112, 'b7e6fea88d6aad8e5dc0beda93445d079b30c520a3551161f6374caf6f4713e1', 779442001, 'fvdvfdvfdvd', '[{\"answer\":\"azulgatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogato\",\"correct\":false},{\"answer\":\"verdegatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogato\",\"correct\":false},{\"answer\":\"moradogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogato\",\"correct\":true},{\"answer\":\"\",\"correct\":false}]', 0),
-(113, 'b7e6fea88d6aad8e5dc0beda93445d079b30c520a3551161f6374caf6f4713e1', 779442001, '¿Comidas?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?', '[{\"answer\":\"pizzagatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogato\",\"correct\":true},{\"answer\":\"coles de bruselasgatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogato\",\"correct\":false},{\"answer\":\"patatas fritasgatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogato\",\"correct\":true}]', 1),
-(114, 'b7e6fea88d6aad8e5dc0beda93445d079b30c520a3551161f6374caf6f4713e1', 779442001, '¿Animal?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?¿Color?', '[{\"answer\":\"ranagatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogato\",\"correct\":false},{\"answer\":\"gatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogato\",\"correct\":true},{\"answer\":\"perrogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogatogato\",\"correct\":false},{\"answer\":\"\",\"correct\":false}]', 0);
+(107, '7f5a6945232135c32ff73643d7c23a0fe62ee57536a200e7aa07b719d7efb7f2', 779442001, 'JAHSHSHS', '[{\"answer\":\"GVGRB\",\"correct\":true},{\"answer\":\"BGBGB\",\"correct\":false}]', 0);
 
 -- --------------------------------------------------------
 
@@ -226,11 +219,7 @@ INSERT INTO `results` (`Identificador`, `gid_exam`, `gid_user`, `total_answers`,
 (41, '12', '726f7361726f736140676d61696c2e636f6d', 2, 0, 0, '00:00:13', '2024-05-10 19:10:52.398036'),
 (42, '7f5a6945232135c32ff73643d7c23a0fe62ee57536a200e7aa07b719d7efb7f2', '726f7361726f736140676d61696c2e636f6d', 4, 3, 75, '00:00:38', '2024-05-10 19:18:13.086290'),
 (43, '7f5a6945232135c32ff73643d7c23a0fe62ee57536a200e7aa07b719d7efb7f2', '726f7361726f736140676d61696c2e636f6d', 4, 4, 100, '00:00:08', '2024-05-10 19:18:55.835503'),
-(44, '7f5a6945232135c32ff73643d7c23a0fe62ee57536a200e7aa07b719d7efb7f2', '69736169736140676d61696c2e636f6d', 4, 3, 75, '00:00:06', '2024-05-10 19:20:14.760201'),
-(45, 'b7e6fea88d6aad8e5dc0beda93445d079b30c520a3551161f6374caf6f4713e1', '69736169736140676d61696c2e636f6d', 3, 0, 0, '00:00:11', '2024-05-12 12:10:54.876237'),
-(46, 'b7e6fea88d6aad8e5dc0beda93445d079b30c520a3551161f6374caf6f4713e1', '69736169736140676d61696c2e636f6d', 3, 0, 0, '00:00:03', '2024-05-12 12:11:36.507858'),
-(47, 'b7e6fea88d6aad8e5dc0beda93445d079b30c520a3551161f6374caf6f4713e1', '69736169736140676d61696c2e636f6d', 3, 1, 33.33, '00:00:05', '2024-05-12 12:17:18.211748'),
-(48, 'b7e6fea88d6aad8e5dc0beda93445d079b30c520a3551161f6374caf6f4713e1', '69736169736140676d61696c2e636f6d', 3, 2, 66.67, '00:00:10', '2024-05-12 12:18:38.423207');
+(44, '7f5a6945232135c32ff73643d7c23a0fe62ee57536a200e7aa07b719d7efb7f2', '69736169736140676d61696c2e636f6d', 4, 3, 75, '00:00:06', '2024-05-10 19:20:14.760201');
 
 -- --------------------------------------------------------
 
@@ -275,9 +264,7 @@ INSERT INTO `shared_exams` (`id_shared`, `gid_exam`, `gid_user`, `date_shared`) 
 (23, '6fc166f112e551c10c9225abc483baaf19123ac4aefb09349c496ba4be466289', '69736162656c69736162656c40676d61696c2e636f6d', '2024-05-05'),
 (24, '3b4032250860abf7e3ec2ead6068eadac53862ccf8ea6352feef3e8aeff722b3', '69736162656c69736162656c40676d61696c2e636f6d', '2024-05-05'),
 (25, '99e58e98078257c7033575e5e6f738f833cf2f656f1f3adbd703be25aaae8764', '69736169736140676d61696c2e636f6d', '2024-05-05'),
-(27, '7f5a6945232135c32ff73643d7c23a0fe62ee57536a200e7aa07b719d7efb7f2', '69736169736140676d61696c2e636f6d', '2024-05-10'),
-(28, 'b7e6fea88d6aad8e5dc0beda93445d079b30c520a3551161f6374caf6f4713e1', '69736162656c69736162656c40676d61696c2e636f6d', '2024-05-12'),
-(29, 'b7e6fea88d6aad8e5dc0beda93445d079b30c520a3551161f6374caf6f4713e1', '7065706570657065406d61696c2e636f6d', '2024-05-12');
+(27, '7f5a6945232135c32ff73643d7c23a0fe62ee57536a200e7aa07b719d7efb7f2', '69736169736140676d61696c2e636f6d', '2024-05-10');
 
 -- --------------------------------------------------------
 
@@ -331,32 +318,7 @@ INSERT INTO `translations` (`id_translation`, `component_name`, `es_ES`, `en_EN`
 (33, 'tableAutor', 'Autor', 'Author'),
 (34, 'tableState', 'Estado', 'State'),
 (35, 'tableDateCreated', 'Creación', 'Created'),
-(36, 'tableDateUpdated', 'Última modificación', 'Last update'),
-(37, 'tableMyexams', 'Exámenes creados por mi', 'Exams created by me'),
-(38, 'titlePagSignup', 'eXamUp - Registrarse', 'eXamUp - Sign up'),
-(39, 'titlePagSignin', 'eXamUp - Iniciar sesión', 'eXamUp - Sign in'),
-(40, 'tableShared', 'Exámenes compartidos', 'Shared exams'),
-(41, 'tableDateShared', 'Fecha compartido', 'Shared date'),
-(42, 'tableFavorites', 'Exámenes favoritos', 'Favorite exams'),
-(43, 'tableResults', 'Tus resultados', 'Your results'),
-(44, 'tableLastDo', 'Última vez', 'Last time'),
-(45, 'buttonPublic', 'Público', 'Public'),
-(46, 'buttonPrivate', 'Privado', 'Private'),
-(47, 'addQuestion', 'Añadir pregunta', 'Add question'),
-(48, 'guardarExamen', 'Guardar examen', 'Save exam'),
-(49, 'inputTitle', 'Título del examen', 'Exam title'),
-(50, 'inputQuestion', 'Enunciado de la pregunta', 'Question sentence'),
-(51, 'addAnswer', 'Añadir respuesta', 'Add answer'),
-(52, 'inputAnswer', 'Enunciado de la respuesta', 'Answer sentence'),
-(53, 'botonContadorDetener', 'Detener', 'Stop'),
-(54, 'botoncontadorReanudar', 'Reanudar', 'Restart'),
-(55, 'buttonPDF', 'Descargar PDF', 'Download PDF'),
-(56, 'spanMultioption', '(Multirespuesta)', '(Multioption)'),
-(57, 'botonTerminar', 'Terminar examen', 'Finish exam'),
-(58, 'infoTotalquestion', 'Total de preguntas:', 'Total number of questions:'),
-(59, 'infoTotalcorrect', 'Respuestas correctas:', 'Correct answers:'),
-(60, 'infoPercentage', 'Porcentaje de respuestas correctas:', 'Percentage of correct answers:'),
-(61, 'infoTime', 'Tiempo transcurrido:', 'Time spend:');
+(36, 'tableDateUpdated', 'Última modificación', 'Last update');
 
 -- --------------------------------------------------------
 
@@ -383,9 +345,7 @@ INSERT INTO `users` (`id_user`, `gid_user`, `user_name`, `email`, `password`, `r
 (3, '616c626572746f616c626572746f40676d61696c2e636f6d', 'alberto', 'alberto@gmail.com', 'alberto', 779442001, 779442002),
 (4, '6a75616e69746f6a75616e69746f406d61696c2e636f6d', 'juanito', 'juanito@mail.com', 'juanito', 779442001, 779442001),
 (5, '69736169736140676d61696c2e636f6d', 'isa', 'isa@gmail.com', 'isa', 779442002, 779442002),
-(6, '726f7361726f736140676d61696c2e636f6d', 'rosamaria', 'rosa@gmail.com', 'rosa', 779442001, 779442001),
-(7, '7065706570657065406d61696c2e636f6d', 'pepe', 'pepe@mail.com', 'pepe', 779442001, 779442002),
-(9, '7061626c6f7061626c6f40676d61696c2e636f6d', 'pablo', 'pablo@gmail.com', 'pablo', 779442001, 779442002);
+(6, '726f7361726f736140676d61696c2e636f6d', 'rosamaria', 'rosa@gmail.com', 'rosa', 779442001, 779442001);
 
 --
 -- Índices para tablas volcadas
@@ -459,13 +419,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `exams`
 --
 ALTER TABLE `exams`
-  MODIFY `id_exam` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id_exam` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT de la tabla `favorites`
 --
 ALTER TABLE `favorites`
-  MODIFY `id_favorite` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `id_favorite` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT de la tabla `languages`
@@ -477,7 +437,7 @@ ALTER TABLE `languages`
 -- AUTO_INCREMENT de la tabla `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `id_question` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
+  MODIFY `id_question` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
 
 --
 -- AUTO_INCREMENT de la tabla `question_type`
@@ -489,7 +449,7 @@ ALTER TABLE `question_type`
 -- AUTO_INCREMENT de la tabla `results`
 --
 ALTER TABLE `results`
-  MODIFY `Identificador` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `Identificador` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT de la tabla `rols`
@@ -501,19 +461,19 @@ ALTER TABLE `rols`
 -- AUTO_INCREMENT de la tabla `shared_exams`
 --
 ALTER TABLE `shared_exams`
-  MODIFY `id_shared` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id_shared` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de la tabla `translations`
 --
 ALTER TABLE `translations`
-  MODIFY `id_translation` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id_translation` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_user` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

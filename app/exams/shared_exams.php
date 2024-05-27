@@ -37,11 +37,19 @@
         <tbody>
             <?php 
                 $consulta = "
-                SELECT se.*, e.*, u.user_name AS autor
+                SELECT 
+                se.*, 
+                e.*, 
+                u.user_name AS autor,
+                DATE_FORMAT(e.date_created, '%d-%m-%Y') AS date_created,
+                DATE_FORMAT(e.date_updated, '%d-%m-%Y') AS date_updated,
+                DATE_FORMAT(se.date_shared, '%d-%m-%Y') AS date_shared
                 FROM shared_exams se
                 LEFT JOIN exams e ON se.gid_exam = e.gid_exam
                 LEFT JOIN users u ON e.gid_user = u.gid_user
-                WHERE se.gid_user = '".$_SESSION['giduser']."' ";
+                WHERE se.gid_user = '".$_SESSION['giduser']."' 
+                ORDER BY date_updated DESC;
+                ";
             
                 $resultado = $conection->query($consulta);
             
@@ -54,12 +62,12 @@
                     $shared = $fila['date_shared'];
                     
                     // Reemplazar "0000-00-00" con "-" si la fecha de modificación es "0000-00-00"
-                    $updated = ($updated == "0000-00-00") ? "-" : $updated;
+                    $updated = ($updated == "00-00-0000") ? "-" : $updated;
                     echo 
                     '<tr>
-                        <td><a class="nav-link" href="?exams=do&gid_exam='.$fila['gid_exam'].'">'.$title.'</a></td> 
+                        <td><a class="nav-link" href="?exams=do&gid_exam='.$fila['gid_exam'].'">' . (strlen($title) > 60 ? substr($title, 0, 80) . "..." : $title) . '</a></td>
                         <td>'.$author.'</td>
-                        <td>'.$status.'</td>
+                        <td style="font-size:20px;"><i class="'.$status.'"></i></td>
                         <td>'.$created.'</td>
                         <td>'.$updated.'</td>
                         <td>'.$shared.'</td>

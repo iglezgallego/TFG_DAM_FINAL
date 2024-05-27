@@ -37,7 +37,7 @@
 
                     echo 
                         '<tr>
-                            <td><a class="nav-link" href="?charts=result&gid_exam='.$fila['gid_exam'].'" data-gid-exam="'.$fila['gid_exam'].'">'.$title.'</a></td>
+                            <td><a class="nav-link" href="?charts=result&gid_exam='.$fila['gid_exam'].'" data-gid-exam="'.$fila['gid_exam'].'">' . (strlen($title) > 60 ? substr($title, 0, 80) . "..." : $title) . '</a></td>
                             <td>'.$author.'</td>
                             <td>'.$lastDate.'</td>
                         </tr>';

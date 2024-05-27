@@ -4,7 +4,7 @@
     $resultado = $conection->query($consulta);
     if($fila=$resultado->fetch_assoc()){
         $title = $fila['title'];
-        echo '<h2 style="margin-bottom:40px;">'.$title.'</h2>';
+        echo '<h2 style="margin-bottom:40px; width: calc(100% - 100px);">'.$title.'</h2>';
     }
 ?>
 
@@ -15,7 +15,8 @@
     <div class="card-body">
       <h5 id="tableTitleResult" class="card-title"><?php foreach ($resultadoTrans as $traduccion) {
                     if ($traduccion['component_name'] === 'tableTitleResult') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
-                    } ?></h5>
+                    } ?>
+        </h5>
         <table class="table table-striped">
             <thead>
               <tr>
@@ -148,20 +149,22 @@
                 <?php 
                     // La consulta primero asigna un número de fila a cada resultado ordenado por nota y tiempo (de menor a mayor), luego calcula el puntaje ponderado (score) para cada resultado. Finalmente, selecciona los 5 mejores resultados basados en el puntaje ponderado y los ordena de mejor a peor.
                     $consulta4 = "
-                    SELECT result, time, date_result, ROUND((result_weight * result + time_weight * time),1) AS score
+                    SELECT result, time, date_result,
+                           ROUND((result_weight * result - time_weight * TIME_TO_SEC(time) / 60), 1) AS score
                     FROM (
-                        SELECT result, time, DATE_FORMAT(date_result, '%d-%m-%Y') AS date_result,
+                        SELECT result, TIME_FORMAT(time, '%H:%i:%s') AS time, DATE_FORMAT(date_result, '%d-%m-%Y') AS date_result,
                                (@row_number:=@row_number + 1) AS row_number,
-                               @result_weight := 0.5 AS result_weight, -- Peso asignado a la nota
-                               @time_weight := 0.5 AS time_weight -- Peso asignado al tiempo
+                               @result_weight := 0.7 AS result_weight,
+                               @time_weight := 0.3 AS time_weight
                         FROM results
-                        CROSS JOIN (SELECT @row_number := 0) AS vars -- Inicializa la variable de fila
+                        CROSS JOIN (SELECT @row_number := 0) AS vars
                         WHERE gid_exam = '".$_GET['gid_exam']."'
                         AND gid_user = '".$_SESSION['giduser']."'
                         ORDER BY result DESC, time ASC
                     ) AS ranked_results
                     WHERE row_number <= 8
-                    ORDER BY score DESC;";
+                    ORDER BY score DESC;
+                    ";
 
                     $resultado4 = $conection->query($consulta4);
                     while($fila = $resultado4->fetch_assoc()){
@@ -194,30 +197,32 @@
                     } ?></h5>
         <?php
         // Realizas la consulta SQL
-        $consulta4 = "
-        SELECT result, time, DATE_FORMAT(date_result, '%d-%m-%Y') AS date_result, 
-               ROUND((result_weight * result + time_weight * time),1) AS score
+        $consulta5 = "
+        SELECT result, time,
+               DATE_FORMAT(date_result, '%d-%m-%Y') AS date_result, 
+               ROUND((result_weight * result - time_weight * TIME_TO_SEC(time) / 60), 1) AS score
         FROM (
-            SELECT result, time, date_result,
+            SELECT result, TIME_FORMAT(time, '%H:%i:%s') AS time, date_result,
                    (@row_number:=@row_number + 1) AS row_number,
-                   @result_weight := 0.5 AS result_weight, -- Peso asignado a la nota
-                   @time_weight := 0.5 AS time_weight -- Peso asignado al tiempo
+                   @result_weight := 0.7 AS result_weight,
+                   @time_weight := 0.3 AS time_weight
             FROM results
-            CROSS JOIN (SELECT @row_number := 0) AS vars -- Inicializa la variable de fila
+            CROSS JOIN (SELECT @row_number := 0) AS vars
             WHERE gid_exam = '".$_GET['gid_exam']."'
             AND gid_user = '".$_SESSION['giduser']."'
         ) AS ranked_results
         WHERE row_number <= 10;
         ";
 
-        $resultado = $conection->query($consulta4);
+
+        $resultado5 = $conection->query($consulta5);
 
         // Arrays para almacenar las fechas y los scores
         $fechas = [];
         $scores = [];
 
         // Iteras sobre los resultados de la consulta
-        while($fila = $resultado->fetch_assoc()) {
+        while($fila = $resultado5->fetch_assoc()) {
             // Añades las fechas y los scores a los arrays
             $fechas[] = $fila['date_result'];
             $scores[] = $fila['score'];

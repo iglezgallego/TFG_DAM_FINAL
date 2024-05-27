@@ -27,12 +27,12 @@
                 <div class="col-md-6">
                     <!-- Grupo de botones para seleccionar el estado del examen -->
                     <div class="btn-group" role="group" aria-label="Tipo de examen">
-                        <input type="radio" class="btn-check" id="publicCheckbox" autocomplete="off" name="examStatus" value="public" <?php echo (isset($estado) && $estado == 'public') ? 'checked' : ''; ?>>
+                        <input type="radio" class="btn-check" id="publicCheckbox" autocomplete="off" name="examStatus" value="bi bi-people-fill" <?php echo (isset($estado) && $estado == 'bi bi-people-fill') ? 'checked' : ''; ?>>
                         <label id="buttonPublic" class="btn btn-outline-primary" for="publicCheckbox"><?php foreach ($resultadoTrans as $traduccion) {
                         if ($traduccion['component_name'] === 'buttonPublic') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
                         } ?></label>
 
-                        <input type="radio" class="btn-check" id="privateCheckbox" autocomplete="off" name="examStatus" value="private" <?php echo (isset($estado) && $estado == 'private') ? 'checked' : ''; ?>>
+                        <input type="radio" class="btn-check" id="privateCheckbox" autocomplete="off" name="examStatus" value="bi bi-person-fill-lock" <?php echo (isset($estado) && $estado == 'bi bi-person-fill-lock') ? 'checked' : ''; ?>>
                         <label id="buttonPrivate" class="btn btn-outline-primary" for="privateCheckbox"><?php foreach ($resultadoTrans as $traduccion) {
                         if ($traduccion['component_name'] === 'buttonPrivate') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
                         } ?></label>

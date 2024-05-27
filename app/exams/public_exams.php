@@ -18,9 +18,7 @@
             <th id="tableAutor"><?php foreach ($resultadoTrans as $traduccion) {
         if ($traduccion['component_name'] === 'tableAutor') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
         } ?></th>
-            <th id="tableState"><?php foreach ($resultadoTrans as $traduccion) {
-        if ($traduccion['component_name'] === 'tableState') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
-        } ?></th>
+            
             <th id="tableDateCreated" data-type="date" data-format="DD/MM/YYYY"><?php foreach ($resultadoTrans as $traduccion) {
         if ($traduccion['component_name'] === 'tableDateCreated') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
         } ?></th>
@@ -33,25 +31,31 @@
         </thead>
         <tbody>
             <?php 
-                $consulta = "SELECT e.*, u.user_name AS autor
+                $consulta = "
+                SELECT 
+                e.*, 
+                u.user_name AS autor,
+                DATE_FORMAT(e.date_created, '%d-%m-%Y') AS date_created,
+                DATE_FORMAT(e.date_updated, '%d-%m-%Y') AS date_updated
                 FROM exams e
                 LEFT JOIN users u ON e.gid_user = u.gid_user
-                WHERE e.status = 'public' ";
+                WHERE e.status = 'bi bi-people-fill' 
+                ORDER BY e.date_created DESC;
+                ";
+
                 $resultado = $conection->query($consulta);
                 while($fila=$resultado->fetch_assoc()){
                     $title = $fila['title'];
                     $author = $fila['autor'];
-                    $status = $fila['status'];
                     $created = $fila['date_created'];
                     $updated = $fila['date_updated'];
                     
                     // Reemplazar "0000-00-00" con "-" si la fecha de modificación es "0000-00-00"
-                    $updated = ($updated == "0000-00-00") ? "-" : $updated;
+                    $updated = ($updated == "00-00-0000") ? "-" : $updated;
                     echo 
                         '<tr>
-                        <td><a class="nav-link" href="?exams=do&gid_exam='.$fila['gid_exam'].'">'.$title.'</a></td>
+                        <td><a class="nav-link" href="?exams=do&gid_exam='.$fila['gid_exam'].'">' . (strlen($title) > 60 ? substr($title, 0, 80) . "..." : $title) . '</a></td>
                         <td>'.$author.'</td>
-                        <td>'.$status.'</td>
                         <td>'.$created.'</td>
                         <td>'.$updated.'</td>
                         <td>';

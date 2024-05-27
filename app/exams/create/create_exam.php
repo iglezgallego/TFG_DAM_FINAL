@@ -11,11 +11,11 @@
                 <div class="col-md-6">
                     <!-- Grupo de botones para seleccionar es status del examen -->
                     <div class="btn-group" role="group" aria-label="Tipo de examen">
-                        <input type="radio" class="btn-check" id="publicCheckbox" autocomplete="off" name="examStatus" value="public">
+                        <input type="radio" class="btn-check" id="publicCheckbox" autocomplete="off" name="examStatus" value="bi bi-people-fill">
                         <label id="buttonPublic" class="btn btn-outline-primary" for="publicCheckbox"><?php foreach ($resultadoTrans as $traduccion) {
                         if ($traduccion['component_name'] === 'buttonPublic') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
                         } ?></label>
-                        <input type="radio" class="btn-check" id="privateCheckbox" autocomplete="off" name="examStatus" value="private" checked>
+                        <input type="radio" class="btn-check" id="privateCheckbox" autocomplete="off" name="examStatus" value="bi bi-person-fill-lock" checked>
                         <label id="buttonPrivate" class="btn btn-outline-primary" for="privateCheckbox"><?php foreach ($resultadoTrans as $traduccion) {
                         if ($traduccion['component_name'] === 'buttonPrivate') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
                         } ?></label>
@@ -80,7 +80,7 @@
 
 
     <div id="botonguardar" style="text-align:center;">
-        <button id="guardarExamen" class="btn btn-primary" onclick="guardarExamen()">
+        <button id="guardarExamen" class="btn btn-primary" onclick="guardarExamen()" disabled>
             <i class="bi bi-check-circle"> <?php foreach ($resultadoTrans as $traduccion) {
                         if ($traduccion['component_name'] === 'guardarExamen') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
                         } ?></i>
