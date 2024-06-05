@@ -44,8 +44,8 @@
                         gid_exam,
                         gid_user,
                         title,
-                        DATE_FORMAT(date_created, '%d-%m-%Y') AS date_created,
-                        DATE_FORMAT(date_updated, '%d-%m-%Y') AS date_updated,
+                        DATE_FORMAT(date_created, '%d-%m-%Y') AS datecreated,
+                        DATE_FORMAT(date_updated, '%d-%m-%Y') AS dateupdated,
                         status
                         FROM exams WHERE gid_user = '".$_SESSION['giduser']."'
                         ORDER BY date_created DESC;
@@ -55,8 +55,8 @@
                             $title = $fila['title'];
                             $author = $_SESSION['username'];
                             $status = $fila['status'];
-                            $created = $fila['date_created'];
-                            $updated = $fila['date_updated'];
+                            $created = $fila['datecreated'];
+                            $updated = $fila['dateupdated'];
                             
                             // Reemplazar "00-00-0000" con "-" si la fecha de modificación es "0000-00-00"
                             $updated = ($updated == "00-00-0000") ? "-" : $updated;
@@ -97,7 +97,7 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <a class="nav-link" href="exams/delete/delete_exam.php?gid_exam='.$fila['gid_exam'].'">
+                                    <a class="nav-link" href="javascript:void(0);" onclick="confirmarBorrado(\''.$fila['gid_exam'].'\')">
                                         <i class="bi bi-trash3-fill" style="color:#4e61f2;"></i>
                                     </a>
                                 </td>
@@ -111,3 +111,12 @@
             </div>
           </div>
         </div>
+    <script>
+        function confirmarBorrado(gid_exam) {
+            // Mostrar mensaje de confirmación
+            if (confirm("¿Estás seguro de que deseas eliminar este examen?")) {
+                // Redirigir a delete_exam.php con el gid_exam como parámetro
+                window.location.href = "exams/delete/delete_exam.php?gid_exam=" + gid_exam;
+            }
+        }
+    </script>

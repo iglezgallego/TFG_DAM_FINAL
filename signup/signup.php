@@ -1,13 +1,11 @@
 <?php
     include "../conection/config.php";
-//Comprueba si el usuario existe y muestra un mensaje en caso de que se cumpla
-    if(isset($_GET['error']) && $_GET['error']=="si"){
+    // Comprueba si el usuario existe y muestra un mensaje en caso de que se cumpla
+    if (isset($_GET['error']) && $_GET['error'] == "si") {
         echo '<script>
-            if(localStorage.getItem("selectedLanguage") === "en_EN") {
-                alert("The user or email already exists");
-            } else {
-                alert("El usuario o email ya existe");
-            }
+            document.addEventListener("DOMContentLoaded", function() {
+                showErrorUserExists();
+            });
         </script>';
     }
 ?>
@@ -28,66 +26,11 @@
     <link rel="icon" href="../assets/brand/logotipo2.png">
     <!-- CDN jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <!-- Archivo de scripts donde se encuentran las funciones -->
+    <script src="../js/scripts.js"></script>
+    <!-- Link a estilo de singin -->
+    <link href="signin.css" rel="stylesheet">
       
-    <!-- Traducciones -->
-    <script> 
-        // Cuando el documento HTML ha sido completamente cargado y analizado, se ejecuta la función asíncrona
-        $(document).ready(async function() {
-            // Obtener el idioma seleccionado del localStorage
-            var selectedLanguage = localStorage.getItem('selectedLanguage');
-            // Definir el idioma predeterminado
-            const defaultLanguage = "es_ES";
-            // Si hay un idioma seleccionado en el localStorage, úsalo; de lo contrario, utiliza el idioma predeterminado
-            var languageToUse = selectedLanguage ? selectedLanguage : defaultLanguage;
-            // Llamada a la función translate() con el idioma seleccionado
-            var traducciones = await translate(languageToUse);
-            console.log(traducciones);
-        });
-
-        // Definición de la función translate(), la cual realiza una solicitud AJAX para obtener traducciones
-        function translate(language) {
-            var componentNameArray = ["titlePagSignup", "floatingInput", "floatingPassword", "floatingEmail", "headline", "signupbutton", "floatingLanguage"]; // Array de nombres de componentes
-
-            // Se devuelve una promesa para manejar el resultado de la solicitud AJAX
-            return new Promise(function(resolve, reject) {
-                // Se realiza la solicitud AJAX utilizando jQuery.ajax()
-                $.ajax({
-                    url: '../ajaxTranslate.php', // URL del archivo PHP que maneja la traducción
-                    type: 'GET', // Método de solicitud HTTP
-                    data: {
-                        language: language, // Parámetro: idioma
-                        componentNameArray: JSON.stringify(componentNameArray) // Parámetro: array de nombres de componentes convertido a cadena JSON
-                    },
-                    // Función que se ejecuta cuando la solicitud AJAX se completa con éxito
-                    success: function(response) {
-                        // Parsear la respuesta JSON
-                        var translations = JSON.parse(response);
-
-                        // Actualizar los elementos HTML con las traducciones
-                        $('#titlePagSignup').text(translations.titlePagSignup);
-                        $('#floatingInput').next('label').text(translations.floatingInput);
-                        $('#floatingEmail').next('label').text(translations.floatingEmail);
-                        $('#floatingPassword').next('label').text(translations.floatingPassword);
-                        $('#headline').text(translations.headline);
-                        $('#floatingLanguage option[value=""]').text(translations.floatingLanguage);
-                        $('#signupbutton').text(translations.signupbutton);
-                        // Continuar actualizando otros elementos
-
-                        // Resolve la promesa con las traducciones
-                        resolve(translations);
-                    },
-                    // Función que se ejecuta si la solicitud AJAX falla
-                    error: function(xhr, status, error) {
-                        // Se imprime el error en la consola del navegador
-                        console.error(xhr);
-                        // Se rechaza la promesa con el mensaje de error
-                        reject(error);
-                    }
-                });
-            });
-        }
-    </script>
-    
     <!-- ESTILO CSS -->
     <style>
       .bd-placeholder-img {
@@ -162,27 +105,10 @@
             margin-top: 0 !important;
         }
     </style>
-      
-    <!-- Link a estilo de singin -->
-    <link href="signin.css" rel="stylesheet">
-    
-    <script>
-        // Script para actualizar el campo oculto con el langkey seleccionado usando jQuery
-        $(document).ready(function() {
-            $('#floatingLanguage').change(function() {
-                var selectedLangKey = $(this).find('option:selected').attr('langkey');
-                $('#floatingLangkey').val(selectedLangKey);
-            });
-        });
-    </script>
   </head>
-    
+  <!-- BODY -->    
   <body class="text-center">
     <main class="form-signin w-100 m-auto">
-        <!-- Botón de retroceso 
-        <a href="#" onclick="window.history.back();" class="btn btn-light border-white bg-white" style="position:absolute; top:20px; right:40px; width:60px">
-            <span style="font-size:25px;font-weight:500;position:center">⇦</span>
-        </a>-->
         <!-- Formulario para el singup con el metodo post y conectado a conf_singup.php -->
         <form action="conf_signup.php" method="post">
             <div id="logo-container">

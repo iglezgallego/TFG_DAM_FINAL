@@ -91,7 +91,7 @@
                         echo '
                         </td>
                         <td>
-                            <a class="nav-link collapsed" href="exams/delete/delete_sharedexam.php?gid_exam='.$fila['gid_exam'].'">
+                            <a class="nav-link" href="javascript:void(0);" onclick="confirmarBorrado(\''.$fila['gid_exam'].'\')">
                                 <i class="bi bi-trash3-fill" style="color:#4e61f2;"></i>
                             </a>
                         </td>
@@ -105,3 +105,12 @@
     </div>
   </div>
 </div>
+<script>
+    function confirmarBorrado(gid_exam) {
+        // Mostrar mensaje de confirmación
+        if (confirm("¿Estás seguro de que deseas eliminar este examen?")) {
+            // Redirigir a delete_exam.php con el gid_exam como parámetro
+            window.location.href = "exams/delete/delete_sharedexam.php?gid_exam=" + gid_exam;
+        }
+    }
+</script>

@@ -1,5 +1,4 @@
 <?php
-
     // Recuperar título del examen
     if(isset($_GET['gid_exam'])) {
         $gid_exam = $_GET['gid_exam'];
@@ -75,7 +74,7 @@
                         <div id="cronometro">
                             <div id="contador">00:00:00</div>
                             <div>
-                                <button id="botonContadorDetener" class="btn btn-primary" onclick="detenerContador()"><?php foreach ($resultadoTrans as $traduccion) {
+                                <button id="botonContadorDetener" class="btn btn-primary" onclick="pausarContador()"><?php foreach ($resultadoTrans as $traduccion) {
                                 if ($traduccion['component_name'] === 'botonContadorDetener') {$contenido = $traduccion[$_SESSION['language']]; echo $contenido; break;}
                                 } ?></button>
                                 <button id="botoncontadorReanudar" class="btn btn-primary" onclick="reanudarContador()"><?php foreach ($resultadoTrans as $traduccion) {
@@ -156,183 +155,240 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 <!-- html2canvas -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!-- SCRIPTS -->
 <script>
-    // Variables globales para almacenar la información necesaria
-    var preguntas = <?php echo json_encode($preguntas); ?>;
-    var numRespuestasCorrectas = <?php echo json_encode($num_respuestas_correctas); ?>;
+//////////////////////FUNCIONES CRONÓMETRO////////////////////////////////
+//Código JS para iniciar y hacer funcionar el cronómetro
+let segundos = 0;
+let minutos = 0;
+let horas = 0;
+let intervalo;
+
+function iniciarContador() {
+    intervalo = setInterval(actualizarContador, 1000);
+}
+
+function pausarContador() {
+    clearInterval(intervalo);
+}
+
+function reanudarContador() {
+    intervalo = setInterval(actualizarContador, 1000);
+}
+
+function actualizarContador() {
+segundos++;
+if (segundos === 60) {
+    segundos = 0;
+    minutos++;
+    if (minutos === 60) {
+        minutos = 0;
+        horas++;
+    }
+}
+
+const tiempoFormateado = `${agregarCeros(horas)}:${agregarCeros(minutos)}:${agregarCeros(segundos)}`;
+document.getElementById("contador").textContent = tiempoFormateado;
+}
+
+function agregarCeros(valor) {
+return valor < 10 ? `0${valor}` : valor;
+}
+
+//funcion para iniciar el contador cuando cargue la pagina
+document.addEventListener('DOMContentLoaded', function() {
+iniciarContador();
+});
+
+//Función para guardar el tiempo transcurrido cuando termino el examen
+function detenerContador() {
+clearInterval(intervalo);
+// Obtener el tiempo transcurrido en segundos
+var tiempoTranscurrido = segundos + minutos * 60 + horas * 3600;
+// Convertir el tiempo transcurrido en formato HH:MM:SS
+var tiempoTranscurridoFormato = agregarCeros(horas) + ':' + agregarCeros(minutos) + ':' + agregarCeros(segundos);
+// Asignar los valores a los campos ocultos
+document.getElementById('tiempo').value = tiempoTranscurrido;
+document.getElementById('tiempoFormato').value = tiempoTranscurridoFormato;
+}
+
+// Variables globales para almacenar la información necesaria
+var preguntas = <?php echo json_encode($preguntas); ?>;
+var numRespuestasCorrectas = <?php echo json_encode($num_respuestas_correctas); ?>;
     
-    ///////////////// FUNCIONES PARA CORREGIR EL EXAMEN ///////////////// 
-    
-        // Función para calcular resultados y mostrarlos
-        function terminarExamen() {
-            // Detener el cronómetro
-            //detenerContador();
+///////////////// FUNCIONES PARA CORREGIR EL EXAMEN ///////////////// 
 
-            // Capturar el tiempo transcurrido
-            var tiempoTranscurridoFormato = document.getElementById("contador").textContent;
+// Función para calcular resultados y mostrarlos
+function terminarExamen() {
+    // Detener el cronómetro
+    //detenerContador();
 
-            // Mostrar los resultados
-            document.getElementById('tiempoTranscurrido').innerText = tiempoTranscurridoFormato;
+    // Capturar el tiempo transcurrido
+    var tiempoTranscurridoFormato = document.getElementById("contador").textContent;
 
-            // Obtener el número total de preguntas
-            var totalPreguntas = preguntas.length;
+    // Mostrar los resultados
+    document.getElementById('tiempoTranscurrido').innerText = tiempoTranscurridoFormato;
 
-            // Inicializar el contador de respuestas correctas
-            var respuestasCorrectas = 0;
+    // Obtener el número total de preguntas
+    var totalPreguntas = preguntas.length;
 
-            // Iterar sobre todas las preguntas para calcular las respuestas correctas
-            preguntas.forEach(function(pregunta, index) {
-                if (pregunta.multioption == 1) {
-                    // Obtener las respuestas seleccionadas por el usuario para esta pregunta
-                    var respuestasSeleccionadas = Array.from(document.querySelectorAll('[name="pregunta_' + index + '[]"]:checked')).map(function(respuesta) {
-                        return respuesta.value;
-                    });
+    // Inicializar el contador de respuestas correctas
+    var respuestasCorrectas = 0;
 
-                    // Verificar si todas las respuestas seleccionadas son correctas
-                    var respuestasCorrectasEsperadas = pregunta.options.filter(function(opcion) {
-                        return opcion.correct;
-                    }).map(function(opcion) {
-                        return opcion.answer;
-                    });
-
-                    if (respuestasSeleccionadas.length === respuestasCorrectasEsperadas.length && respuestasSeleccionadas.every(function(respuesta) {
-                        return respuestasCorrectasEsperadas.includes(respuesta);
-                    })) {
-                        respuestasCorrectas++; // Incrementar el contador de respuestas correctas
-                    }
-                } else {
-                    // Obtener la respuesta seleccionada por el usuario para esta pregunta
-                    var respuestaSeleccionada = document.querySelector('[name="pregunta_' + index + '"]:checked');
-                    // Obtener la respuesta correcta para esta pregunta
-                    var respuestaCorrecta;
-                    pregunta.options.forEach(function(opcion) {
-                        if (opcion.correct) {
-                            respuestaCorrecta = opcion.answer;
-                        }
-                    });
-
-                    // Verificar si la respuesta seleccionada coincide con la respuesta correcta
-                    if (respuestaSeleccionada && respuestaSeleccionada.value === respuestaCorrecta) {
-                        respuestasCorrectas++; // Incrementar el contador de respuestas correctas
-                    }
-                }
+    // Iterar sobre todas las preguntas para calcular las respuestas correctas
+    preguntas.forEach(function(pregunta, index) {
+        if (pregunta.multioption == 1) {
+            // Obtener las respuestas seleccionadas por el usuario para esta pregunta
+            var respuestasSeleccionadas = Array.from(document.querySelectorAll('[name="pregunta_' + index + '[]"]:checked')).map(function(respuesta) {
+                return respuesta.value;
             });
 
-            // Calcular el porcentaje de respuestas correctas
-            var porcentajeCorrectas = (respuestasCorrectas / totalPreguntas) * 100;
+            // Verificar si todas las respuestas seleccionadas son correctas
+            var respuestasCorrectasEsperadas = pregunta.options.filter(function(opcion) {
+                return opcion.correct;
+            }).map(function(opcion) {
+                return opcion.answer;
+            });
 
-            // Mostrar los resultados
-            document.getElementById('totalRespuestas').innerText = totalPreguntas;
-            document.getElementById('respuestasCorrectas').innerText = respuestasCorrectas;
-            document.getElementById('resultado').innerText = porcentajeCorrectas.toFixed(2);
-            document.getElementById('resultadosContainer').style.display = 'block'; // Cambiar el estilo a block
-
-            // Estilizar las respuestas
-            estilizarRespuestas();
-
-            // Ocultar el cronómetro
-            document.getElementById('cronometro').style.display = 'none';
-
-            // Ocultar el botón de terminar
-            document.getElementById('botonTerminar').style.display = 'none';
-            
-            // Obtener el valor de gid_exam del input hidden
-            var gid_exam_value = document.querySelector('input[name="gid_exam"]').value;
-
-            // Llamar a la función enviarDatos() con gid_exam_value como parámetro
-            enviarDatos(totalPreguntas, respuestasCorrectas, porcentajeCorrectas, tiempoTranscurridoFormato, gid_exam_value);
-            
-             // Realizar scroll automático hacia arriba de la página
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-
-
-        function estilizarRespuestas() {
-        preguntas.forEach(function(pregunta, index) {
-            var opciones;
-            if (pregunta.multioption == 1) {
-                opciones = document.querySelectorAll('[name="pregunta_' + index + '[]"]');
-            } else {
-                opciones = document.querySelectorAll('[name="pregunta_' + index + '"]');
+            if (respuestasSeleccionadas.length === respuestasCorrectasEsperadas.length && respuestasSeleccionadas.every(function(respuesta) {
+                return respuestasCorrectasEsperadas.includes(respuesta);
+            })) {
+                respuestasCorrectas++; // Incrementar el contador de respuestas correctas
             }
-
-            opciones.forEach(function(opcion) {
-                // Restablecer los estilos a su estado inicial
-                opcion.parentNode.style.backgroundColor = ''; 
-
-                // Verificar si la opción está marcada
-                if (opcion.checked && opcion.parentNode) {
-                    var valorRespuesta = opcion.value;
-                    pregunta.options.forEach(function(respuesta) { // Cambio de nombre de variable
-                        // Verificar si la opción es la respuesta seleccionada por el usuario
-                        if (respuesta.answer === valorRespuesta) {
-                            // Verificar si la respuesta es correcta o incorrecta y aplicar los estilos correspondientes
-                            if (respuesta.correct) {
-                                opcion.parentNode.style.backgroundColor = '#C0F4C0'; // Estilo para respuestas correctas
-                                opcion.nextElementSibling.innerHTML += '&emsp;<span style="color:green;">✓</span>'; // Agregar tick verde
-                            } else {
-                                opcion.parentNode.style.backgroundColor = '#F4B5B5'; // Estilo para respuestas incorrectas
-                                opcion.nextElementSibling.innerHTML += '&emsp;<span style="color:red;">✗</span>'; // Agregar tick verde
-                            }
-                        }
-                    });
-                } else { // Si la opción no está marcada pero es correcta, marcarla en verde y agregar el tick
-                    pregunta.options.forEach(function(respuesta) {
-                        if (respuesta.correct && respuesta.answer === opcion.value) {
-                            opcion.parentNode.style.backgroundColor = '#C0F4C0'; // Estilo para respuestas correctas no seleccionadas
-                        }
-                    });
+        } else {
+            // Obtener la respuesta seleccionada por el usuario para esta pregunta
+            var respuestaSeleccionada = document.querySelector('[name="pregunta_' + index + '"]:checked');
+            // Obtener la respuesta correcta para esta pregunta
+            var respuestaCorrecta;
+            pregunta.options.forEach(function(opcion) {
+                if (opcion.correct) {
+                    respuestaCorrecta = opcion.answer;
                 }
             });
-        });
-    }
+
+            // Verificar si la respuesta seleccionada coincide con la respuesta correcta
+            if (respuestaSeleccionada && respuestaSeleccionada.value === respuestaCorrecta) {
+                respuestasCorrectas++; // Incrementar el contador de respuestas correctas
+            }
+        }
+    });
+
+    // Calcular el porcentaje de respuestas correctas
+    var porcentajeCorrectas = (respuestasCorrectas / totalPreguntas) * 100;
+
+    // Mostrar los resultados
+    document.getElementById('totalRespuestas').innerText = totalPreguntas;
+    document.getElementById('respuestasCorrectas').innerText = respuestasCorrectas;
+    document.getElementById('resultado').innerText = porcentajeCorrectas.toFixed(2);
+    document.getElementById('resultadosContainer').style.display = 'block'; // Cambiar el estilo a block
+
+    // Estilizar las respuestas
+    estilizarRespuestas();
+
+    // Ocultar el cronómetro
+    document.getElementById('cronometro').style.display = 'none';
+
+    // Ocultar el botón de terminar
+    document.getElementById('botonTerminar').style.display = 'none';
+
+    // Obtener el valor de gid_exam del input hidden
+    var gid_exam_value = document.querySelector('input[name="gid_exam"]').value;
+
+    // Llamar a la función enviarDatos() con gid_exam_value como parámetro
+    enviarDatos(totalPreguntas, respuestasCorrectas, porcentajeCorrectas, tiempoTranscurridoFormato, gid_exam_value);
+
+     // Realizar scroll automático hacia arriba de la página
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
 
-        // Función para enviar datos con AJAX
-        function enviarDatos(totalPreguntas, respuestasCorrectas, porcentajeCorrectas, tiempoTranscurridoFormato, gid_exam) {
-            // Crear un objeto con los datos a enviar
-            var datos = {
-                totalPreguntas: totalPreguntas,
-                respuestasCorrectas: respuestasCorrectas,
-                porcentajeCorrectas: porcentajeCorrectas,
-                tiempoTranscurrido: tiempoTranscurridoFormato,
-                gid_exam: gid_exam 
-            };
 
-            // Realizar la solicitud AJAX usando jQuery
-            $.ajax({
-                type: "POST",
-                url: "exams/do/conf_do_exam.php",
-                data: JSON.stringify(datos),
-                contentType: "application/json",
-                success: function(response) {
-                    console.log('Datos enviados correctamente'); // Mensaje de éxito en la consola
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error al enviar los datos:', error); // Mensaje de error en la consola si la petición no fue exitosa
-                }
-            });
+function estilizarRespuestas() {
+    preguntas.forEach(function(pregunta, index) {
+        var opciones;
+        if (pregunta.multioption == 1) {
+            opciones = document.querySelectorAll('[name="pregunta_' + index + '[]"]');
+        } else {
+            opciones = document.querySelectorAll('[name="pregunta_' + index + '"]');
         }
 
-    
-    // Función para descargar el pdf usando la librería
-    function descargarPDF() {
-        const divParaExportar = document.querySelector('.card-body'); // Selecciona el div con la clase "card-body"
+        opciones.forEach(function(opcion) {
+            // Restablecer los estilos a su estado inicial
+            opcion.parentNode.style.backgroundColor = ''; 
 
-        // Obtener la fecha y hora actual en el formato deseado
-        const ahora = new Date();
-        const fechaHora = `${agregarCeros(ahora.getDate())}.${agregarCeros(ahora.getMonth() + 1)}.${ahora.getFullYear()}_${agregarCeros(ahora.getHours())}.${agregarCeros(ahora.getMinutes())}.${agregarCeros(ahora.getSeconds())}`;
-
-        html2canvas(divParaExportar).then(canvas => {
-            const imgData = canvas.toDataURL('image/png');
-            const pdf = new window.jspdf.jsPDF(); // Modificamos esta línea para acceder a jsPDF
-            const ancho = pdf.internal.pageSize.getWidth();
-            const altura = pdf.internal.pageSize.getHeight();
-            pdf.addImage(imgData, 'PNG', 0, 0, ancho, altura);
-
-            // Nombrar el archivo PDF con la fecha y hora actual
-            pdf.save(`examup_${fechaHora}.pdf`);
+            // Verificar si la opción está marcada
+            if (opcion.checked && opcion.parentNode) {
+                var valorRespuesta = opcion.value;
+                pregunta.options.forEach(function(respuesta) { // Cambio de nombre de variable
+                    // Verificar si la opción es la respuesta seleccionada por el usuario
+                    if (respuesta.answer === valorRespuesta) {
+                        // Verificar si la respuesta es correcta o incorrecta y aplicar los estilos correspondientes
+                        if (respuesta.correct) {
+                            opcion.parentNode.style.backgroundColor = '#C0F4C0'; // Estilo para respuestas correctas
+                            opcion.nextElementSibling.innerHTML += '&emsp;<span style="color:green;">✓</span>'; // Agregar tick verde
+                        } else {
+                            opcion.parentNode.style.backgroundColor = '#F4B5B5'; // Estilo para respuestas incorrectas
+                            opcion.nextElementSibling.innerHTML += '&emsp;<span style="color:red;">✗</span>'; // Agregar tick verde
+                        }
+                    }
+                });
+            } else { // Si la opción no está marcada pero es correcta, marcarla en verde y agregar el tick
+                pregunta.options.forEach(function(respuesta) {
+                    if (respuesta.correct && respuesta.answer === opcion.value) {
+                        opcion.parentNode.style.backgroundColor = '#C0F4C0'; // Estilo para respuestas correctas no seleccionadas
+                    }
+                });
+            }
         });
-    }
+    });
+}
+
+
+// Función para enviar datos con AJAX
+function enviarDatos(totalPreguntas, respuestasCorrectas, porcentajeCorrectas, tiempoTranscurridoFormato, gid_exam) {
+    // Crear un objeto con los datos a enviar
+    var datos = {
+        totalPreguntas: totalPreguntas,
+        respuestasCorrectas: respuestasCorrectas,
+        porcentajeCorrectas: porcentajeCorrectas,
+        tiempoTranscurrido: tiempoTranscurridoFormato,
+        gid_exam: gid_exam 
+    };
+
+    // Realizar la solicitud AJAX usando jQuery
+    $.ajax({
+        type: "POST",
+        url: "exams/do/conf_do_exam.php",
+        data: JSON.stringify(datos),
+        contentType: "application/json",
+        success: function(response) {
+            console.log('Datos enviados correctamente'); // Mensaje de éxito en la consola
+        },
+        error: function(xhr, status, error) {
+            console.error('Error al enviar los datos:', error); // Mensaje de error en la consola si la petición no fue exitosa
+        }
+    });
+}
+
+
+// Función para descargar el pdf usando la librería
+function descargarPDF() {
+    const divParaExportar = document.querySelector('.card-body'); // Selecciona el div con la clase "card-body"
+
+    // Obtener la fecha y hora actual en el formato deseado
+    const ahora = new Date();
+    const fechaHora = `${agregarCeros(ahora.getDate())}.${agregarCeros(ahora.getMonth() + 1)}.${ahora.getFullYear()}_${agregarCeros(ahora.getHours())}.${agregarCeros(ahora.getMinutes())}.${agregarCeros(ahora.getSeconds())}`;
+
+    html2canvas(divParaExportar).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new window.jspdf.jsPDF(); // Modificamos esta línea para acceder a jsPDF
+        const ancho = pdf.internal.pageSize.getWidth();
+        const altura = pdf.internal.pageSize.getHeight();
+        pdf.addImage(imgData, 'PNG', 0, 0, ancho, altura);
+
+        // Nombrar el archivo PDF con la fecha y hora actual
+        pdf.save(`examup_${fechaHora}.pdf`);
+    });
+}
 </script>

@@ -40,65 +40,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
       <!-- CDN jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    
-
-    <!-- Traducciones -->
-    <script> 
-        // Cuando el documento HTML ha sido completamente cargado y analizado, se ejecuta la función asíncrona
-        $(document).ready(async function() {
-            // Obtener el idioma seleccionado del localStorage
-            var selectedLanguage = localStorage.getItem('selectedLanguage');
-            // Definir el idioma predeterminado
-            const defaultLanguage = "es_ES";
-            // Si hay un idioma seleccionado en el localStorage, úsalo; de lo contrario, utiliza el idioma predeterminado
-            var languageToUse = selectedLanguage ? selectedLanguage : defaultLanguage;
-            // Llamada a la función translate() con el idioma seleccionado
-            var traducciones = await translate(languageToUse);
-            console.log(traducciones);
-        });
-
-        // Definición de la función translate(), la cual realiza una solicitud AJAX para obtener traducciones
-        function translate(language) {
-            var componentNameArray = ["titlePagSignin" ,"floatingInputSignin", "floatingPasswordSignin", "headlineSignin", "buttonaccessSignin", "signupbutton"]; // Array de nombres de componentes
-
-            // Se devuelve una promesa para manejar el resultado de la solicitud AJAX
-            return new Promise(function(resolve, reject) {
-                // Se realiza la solicitud AJAX utilizando jQuery.ajax()
-                $.ajax({
-                    url: '../ajaxTranslate.php', // URL del archivo PHP que maneja la traducción
-                    type: 'GET', // Método de solicitud HTTP
-                    data: {
-                        language: language, // Parámetro: idioma
-                        componentNameArray: JSON.stringify(componentNameArray) // Parámetro: array de nombres de componentes convertido a cadena JSON
-                    },
-                    // Función que se ejecuta cuando la solicitud AJAX se completa con éxito
-                    success: function(response) {
-                        // Parsear la respuesta JSON
-                        var translations = JSON.parse(response);
-
-                        // Actualizar los elementos HTML con las traducciones
-                        $('#titlePagSignin').text(translations.titlePagSignin);
-                        $('#floatingInputSignin').next('label').text(translations.floatingInputSignin);
-                        $('#floatingPasswordSignin').next('label').text(translations.floatingPasswordSignin);
-                        $('#headlineSignin').text(translations.headlineSignin);
-                        $('#buttonaccessSignin').text(translations.buttonaccessSignin);
-                        $('#signupbutton').text(translations.signupbutton);
-                        // Continuar actualizando otros elementos
-
-                        // Resolve la promesa con las traducciones
-                        resolve(translations);
-                    },
-                    // Función que se ejecuta si la solicitud AJAX falla
-                    error: function(xhr, status, error) {
-                        // Se imprime el error en la consola del navegador
-                        console.error(xhr);
-                        // Se rechaza la promesa con el mensaje de error
-                        reject(error);
-                    }
-                });
-            });
-        }
-    </script>
+    <!-- Archivo de scripts donde se encuentran las funciones -->
+    <script src="../js/scripts.js"></script>
+    <!-- Link al css de sing-in -->
+    <link href="sign-in.css" rel="stylesheet">
       
     <style>
       .bd-placeholder-img {
@@ -170,9 +115,6 @@
         }
        
     </style>
-
-    <!-- Link al css de sing-in -->
-    <link href="sign-in.css" rel="stylesheet">
   </head>
   <body class="text-center">
     <main class="form-signin w-100 m-auto">
@@ -180,7 +122,6 @@
         <form action="conf_signin.php" method="post">
             <div id="logo-container">
                 <h1 style="font-family:matisan; font-size:75px; color:#3278c8;">e<img class="mb-4" src="../assets/brand/logotipo2.png" alt="" width="60" height="60">amUp</h1>
-                
             </div>
             <h2 class="h3 mb-3 fw-normal" id="headlineSignin" style="font-size:22px; margin-top:30px;">Iniciar sesión</h2>
             <div class="form-floating">
@@ -191,12 +132,9 @@
                 <input type="password" class="form-control" id="floatingPasswordSignin" placeholder="Password" name="password" required>
                 <label for="floatingPasswordSignin">Contraseña</label>
             </div>
-            
-
             <!-- Botón de signin --> 
             <button class="w-100 btn btn-lg btn-primary" id="buttonaccessSignin" type="submit" style="background:#0d6efd; border:none; margin-bottom:10px;">Acceder</button>
             <!-- Botón para ir a registrarse --> 
-            
         </form>
         <form action="../signup/signup.php">
             <button class="w-100 btn btn-lg btn-primary" id="signupbutton" style="background:#596060; border:none;">Registrarse</button>

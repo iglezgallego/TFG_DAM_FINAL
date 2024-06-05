@@ -952,61 +952,6 @@
                 }
             });
         }
-        ///////////////// FUNCIONES PARA HACER EXAMEN ///////////////////////
-        
-        //Código JS para iniciar y hacer funcionar el cronómetro
-        let segundos = 0;
-        let minutos = 0;
-        let horas = 0;
-        let intervalo;
-
-        function iniciarContador() {
-            intervalo = setInterval(actualizarContador, 1000);
-        }
-
-        function detenerContador() {
-            clearInterval(intervalo);
-        }
-
-        function reanudarContador() {
-            intervalo = setInterval(actualizarContador, 1000);
-        }
-
-        function actualizarContador() {
-            segundos++;
-            if (segundos === 60) {
-                segundos = 0;
-                minutos++;
-                if (minutos === 60) {
-                    minutos = 0;
-                    horas++;
-                }
-            }
-
-            const tiempoFormateado = `${agregarCeros(horas)}:${agregarCeros(minutos)}:${agregarCeros(segundos)}`;
-            document.getElementById("contador").textContent = tiempoFormateado;
-        }
-
-        function agregarCeros(valor) {
-            return valor < 10 ? `0${valor}` : valor;
-        }
-        
-        //funcion para iniciar el contador cuando cargue la pagina
-        document.addEventListener('DOMContentLoaded', function() {
-            iniciarContador();
-        });
-        
-        //Función para guardar el tiempo transcurrido cuando termino el examen
-        function detenerContador() {
-            clearInterval(intervalo);
-            // Obtener el tiempo transcurrido en segundos
-            var tiempoTranscurrido = segundos + minutos * 60 + horas * 3600;
-            // Convertir el tiempo transcurrido en formato HH:MM:SS
-            var tiempoTranscurridoFormato = agregarCeros(horas) + ':' + agregarCeros(minutos) + ':' + agregarCeros(segundos);
-            // Asignar los valores a los campos ocultos
-            document.getElementById('tiempo').value = tiempoTranscurrido;
-            document.getElementById('tiempoFormato').value = tiempoTranscurridoFormato;
-        }
         
     ///////////////// FUNCIONES ANIMACIÓN MAIN ///////////////////////
         
